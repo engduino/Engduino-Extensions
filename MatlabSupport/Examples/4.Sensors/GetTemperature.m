@@ -15,7 +15,7 @@ clear all; close all;
 % E.g. e = engduino('Bluetooth', 'your_device_name');
 % Set "port = demo" to enable demo run.
 port = 'demo';
-port = 'COM16';
+port = 'COM8';
 e = engduino(port);
 
 %% Initialize variables

@@ -1,0 +1,202 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>RunningLeds.m demo example.</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-04-29"><meta name="DC.source" content="RunningLeds.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>RunningLeds.m demo example.</h1><!--introduction--><p>Description: The aim of this example is to show some of the methods of causing the LEDs to light. The first part of the code is where red, green and blue LEDs chase anti-clockwise around the Engduino, getting gradually faster until they blur into white.</p><p>When going sufficiently fast, we display red green and blue on all LEDs. After that code rests back to initial state and repeat the execution.</p><p>July 2014, Engduino team: <a href="mailto:support@engduino.org">support@engduino.org</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Initialize variables</a></li><li><a href="#2">Main loop</a></li></ul></div><h2>Initialize variables<a name="1"></a></h2><pre class="codeinput"><span class="comment">% Check if the Engduino object already exists. Otherwise initialize it.</span>
+<span class="keyword">if</span> (~exist(<span class="string">'e'</span>, <span class="string">'var'</span>))
+    <span class="comment">% Create Engduino object and open COM port. You do not need to select an</span>
+    <span class="comment">% active COM port as it should be detected automatically. However in the</span>
+    <span class="comment">% case of unsuccessfully connection you may initialize Engduino object</span>
+    <span class="comment">% passing the active COM port. E.g. e = engduino('COM8');</span>
+    <span class="comment">% To open the 'Bluetooth' port you need to initialize the Engduino object</span>
+    <span class="comment">% with the 'Bluetooth' keyword and your Bluetooth device name.</span>
+    <span class="comment">% E.g. e = engduino('Bluetooth', 'HC-05');</span>
+    <span class="comment">% Demo mode can be enabled by initialize the Engduino object with 'demo'</span>
+    <span class="comment">% keyword. E.g. e = engduino('demo');</span>
+    e = engduino();
+<span class="keyword">end</span>
+
+<span class="comment">% Set initial LEDs state</span>
+leds = [0, 1, 2];
+
+<span class="comment">% Set frequency [Hz]. Steps per second.</span>
+frequency = 5;
+</pre><h2>Main loop<a name="2"></a></h2><p>Execute loop until exit condition is met.</p><pre class="codeinput">disp(<span class="string">'You can terminate execution by:'</span>)
+disp(<span class="string">'- Press ''ESC'''</span>)
+disp(<span class="string">'- Press ''q'''</span>)
+disp(<span class="string">'- Press a button on the Engduino board'</span>)
+disp(<span class="string">'- Close the figure'</span>)
+
+<span class="keyword">while</span> ExitCondition([], e, true)
+
+    <span class="comment">% Update LEDs by sending command to the Engduino board.</span>
+    e.setLedsExact(mod(leds, 16), [e.COLOR_RED, e.COLOR_GREEN, e.COLOR_BLUE]);
+
+    <span class="comment">% Update internal 'leds' array holding current state of LEDs.</span>
+    leds = leds + [1, 1, 1];
+
+    <span class="comment">% Pause for one time interval.</span>
+    pause(1/frequency);
+
+    <span class="comment">% Speed-up a bit.</span>
+    frequency = frequency + 0.3;
+
+    <span class="comment">% Check if the frequency is too high.</span>
+    <span class="keyword">if</span>(frequency &gt; 100)
+        <span class="comment">% Reset the frequency variable</span>
+        frequency = 5;
+
+        <span class="comment">% Set all LEDs on red, green and blue colour for a short amount of</span>
+        <span class="comment">% time (500 milliseconds).</span>
+        e.setLedsAll(e.COLOR_RED);
+        pause(0.5);
+        e.setLedsAll(e.COLOR_GREEN);
+        pause(0.5);
+        e.setLedsAll(e.COLOR_BLUE);
+        pause(0.5);
+        e.setLedsAll(e.COLOR_OFF);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% RunningLeds.m demo example.
+%
+% Description:
+% The aim of this example is to show some of the methods of
+% causing the LEDs to light. The first part of the code is where
+% red, green and blue LEDs chase anti-clockwise around the Engduino,
+% getting gradually faster until they blur into white.
+%
+% When going sufficiently fast, we display red green and blue on all
+% LEDs. After that code rests back to initial state and repeat the 
+% execution. 
+%
+% July 2014, Engduino team: support@engduino.org
+% 
+
+%% Initialize variables
+
+% Check if the Engduino object already exists. Otherwise initialize it.
+if (~exist('e', 'var'))
+    % Create Engduino object and open COM port. You do not need to select an 
+    % active COM port as it should be detected automatically. However in the 
+    % case of unsuccessfully connection you may initialize Engduino object 
+    % passing the active COM port. E.g. e = engduino('COM8'); 
+    % To open the 'Bluetooth' port you need to initialize the Engduino object 
+    % with the 'Bluetooth' keyword and your Bluetooth device name.
+    % E.g. e = engduino('Bluetooth', 'HC-05');
+    % Demo mode can be enabled by initialize the Engduino object with 'demo'
+    % keyword. E.g. e = engduino('demo');
+    e = engduino();
+end
+ 
+% Set initial LEDs state
+leds = [0, 1, 2];
+ 
+% Set frequency [Hz]. Steps per second.
+frequency = 5;
+ 
+%% Main loop
+% Execute loop until exit condition is met.
+disp('You can terminate execution by:')
+disp('- Press ''ESC''')
+disp('- Press ''q''')
+disp('- Press a button on the Engduino board')
+disp('- Close the figure')
+
+while ExitCondition([], e, true)
+    
+    % Update LEDs by sending command to the Engduino board.
+    e.setLedsExact(mod(leds, 16), [e.COLOR_RED, e.COLOR_GREEN, e.COLOR_BLUE]);
+    
+    % Update internal 'leds' array holding current state of LEDs.
+    leds = leds + [1, 1, 1];
+    
+    % Pause for one time interval.
+    pause(1/frequency);
+    
+    % Speed-up a bit.
+    frequency = frequency + 0.3;
+    
+    % Check if the frequency is too high.
+    if(frequency > 100)
+        % Reset the frequency variable
+        frequency = 5;
+        
+        % Set all LEDs on red, green and blue colour for a short amount of 
+        % time (500 milliseconds).  
+        e.setLedsAll(e.COLOR_RED);
+        pause(0.5);
+        e.setLedsAll(e.COLOR_GREEN);
+        pause(0.5);
+        e.setLedsAll(e.COLOR_BLUE);
+        pause(0.5);
+        e.setLedsAll(e.COLOR_OFF);
+    end
+end
+##### SOURCE END #####
+--></body></html>

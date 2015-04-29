@@ -82,5 +82,14 @@ e.setLedsB(zeros(1,16), (0:15));
 
 %% IO
 e.setDigitalPinsType([13, e.PIN_TYPE_OUTPUT]);
-e.setDigitalPinsValue([13, 1, 2000; 12, 0, 12]);
+e.setDigitalPinsValue([13, 1, 200]);
+%e.setDigitalPinsValue([12, 1, 200; 13, 1, 1000]);
+
+%% Crash with timers!
+e.setDigitalPinsType([13, e.PIN_TYPE_OUTPUT]);
+e.setAnalogPinsValue([13, 155, 1000]);
+
+%%
+e.getDigitalPinsValue([13; 12; 7])
+e.getAnalogPinsValue([0; 1; 2; 3; 4; 5])
 

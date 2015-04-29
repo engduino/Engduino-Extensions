@@ -524,7 +524,7 @@ classdef engduino < handle
                         s = [s e.PACKAGE_DELIMITER_CHR num2str(vals(i))];
                     end
                     s = [s e.PACKAGE_STOP_CHR]; % Add stop character
-                    disp(['PACKAGE:' s]);
+                    %disp(['PACKAGE:' s]);
                     fwrite(e.aser, s); % Send package
                     
                 case e.PACKAGE_TYPE_2
@@ -1610,101 +1610,9 @@ classdef engduino < handle
     
     methods (Static, Hidden=true) % static methods
         
-        function errstr=checknum(num, description, allowed)
-            
-            % errstr=arduino.checknum(num,description,allowed); Checks numeric argument.
-            % This function checks the first argument, num, described in the string
-            % given as a second argument, to make sure that it is real, scalar,
-            % and that it is equal to one of the entries of the vector of allowed
-            % values given as a third argument. If the check is successful then the
-            % returned argument is empty, otherwise it is a string specifying
-            % the type of error.
-            
-            % initialize error string
-            errstr=[];
-            
-            % check num for type
-            if ~isnumeric(num),
-                errstr=['The ' description ' must be numeric'];
-                return
-            end
-            
-            % check num for size
-            if numel(num)~=1,
-                errstr=['The ' description ' must be a scalar'];
-                return
-            end
-            
-            % check num for realness
-            if ~isreal(num),
-                errstr=['The ' description ' must be a real value'];
-                return
-            end
-            
-            % check num against allowed values
-            if ~any(allowed==num),
-                
-                % form right error string
-                if numel(allowed)==1,
-                    errstr=['Unallowed value for ' description ', the value must be exactly ' num2str(allowed(1))];
-                elseif numel(allowed)==2,
-                    errstr=['Unallowed value for ' description ', the value must be either ' num2str(allowed(1)) ' or ' num2str(allowed(2))];
-                elseif max(diff(allowed))==1,
-                    errstr=['Unallowed value for ' description ', the value must be an integer going from ' num2str(allowed(1)) ' to ' num2str(allowed(end))];
-                else
-                    errstr=['Unallowed value for ' description ', the value must be one of the following: ' mat2str(allowed)];
-                end
-                
-            end
-            
-        end % checknum
-        
-        function errstr = checkstr(str, description, allowed)
-            
-            % errstr=arduino.checkstr(str,description,allowed); Checks string argument.
-            % This function checks the first argument, str, described in the string
-            % given as a second argument, to make sure that it is a string, and that
-            % its first character is equal to one of the entries in the cell of
-            % allowed characters given as a third argument. If the check is successful
-            % then the returned argument is empty, otherwise it is a string specifying
-            % the type of error.
-            
-            % initialize error string
-            errstr = [];
-            
-            % check string for type
-            if ~ischar(str),
-                errstr = ['The ' description ' argument must be a string'];
-                return
-            end
-            
-            % check string for size
-            if numel(str) < 1,
-                errstr = ['The ' description ' argument cannot be empty'];
-                return
-            end
-            
-            % check str against allowed values
-            if ~any(strcmpi(str, allowed)),
-                
-                % make sure this is a hozizontal vector
-                allowed = allowed(:)';
-                
-                % add a comma at the end of each value
-                for i=1:length(allowed)-1,
-                    allowed{i}=['''' allowed{i} ''', '];
-                end
-                
-                % form error string
-                errstr=['Unallowed value for ' description ', the value must be either: ' allowed{1:end-1} 'or ''' allowed{end} ''''];
-                return
-            end
-            
-        end % checkstr
-        
         function errstr = checkser(ser, chk)
             
-            % errstr=arduino.checkser(ser,chk); Checks serial connection argument.
+            % errstr = e.checkser(ser,chk); Checks serial connection argument.
             % This function checks the first argument, ser, to make sure that either:
             % 1) it is a valid serial connection (if the second argument is 'valid')
             % 3) it is open (if the second argument is 'open')
@@ -1740,29 +1648,28 @@ classdef engduino < handle
                     % Check if serial object exsist
                     if isempty(ser),
                         disp('Serial object not initialised.');
-                        errstr='Serial connection invalid';
+                        errstr = 'Serial connection invalid';
                         return
                     end
                                         
                      % make sure is valid
                     if ~isvalid(ser),
                         disp('Serial connection invalid, please recreate the object to reconnect to a serial port.');
-                        errstr='Serial connection invalid';
+                        errstr = 'Serial connection invalid';
                         return
                     end
                     
                     % check openness
-                    if ~strcmpi(get(ser,'Status'),'open'),
+                    if ~strcmpi(get(ser, 'Status'), 'open'),
                         disp('Serial connection not opened, please recreate the object to reconnect to a serial port.');
-                        errstr='Serial connection not opened';
+                        errstr = 'Serial connection not opened';
                         return
                     end
-                    
                     
                 otherwise
                     
                     % complain
-                    error('second argument must be either ''valid'' or ''open''');
+                    error('second argument must be either ''valid'', ''open'' or ''validopen''');
                     
             end
             
