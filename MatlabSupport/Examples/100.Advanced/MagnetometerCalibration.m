@@ -21,7 +21,7 @@ clear all; close all;
 % E.g. e = engduino('Bluetooth', 'your_device_name');
 % Set "port = demo" to enable demo run.
 port = 'demo';
-port = 'COM16';
+%port = 'COM8';
 e = engduino(port);
  
 %% Initialize variables.
@@ -85,21 +85,22 @@ while ExitCondition(mag, e, true)
     [B, Ainv, v] = GetOffsetsAndScaleFactors(mag, 0.569);
     
     % Delete Plot handles.
-    if (exist('he', 'var')  && he     > 0), delete(he);  end
-    if (exist('hcp', 'var') && hcp(1) > 0), delete(hcp); end
-    if (exist('hc', 'var')  && hc(1)  > 0), delete(hc);  end
-    if (exist('he2', 'var') && he2    > 0), delete(he2); end
-    if (exist('hc2', 'var') && hc2(1) > 0), delete(hc2); end
+    if (exist('he', 'var')  && he(1)  ~= 0), delete(he);  end
+    if (exist('hcp', 'var') && hcp(1) ~= 0), delete(hcp); end
+    if (exist('hc', 'var')  && hc(1)  ~= 0), delete(hc);  end
+    if (exist('he2', 'var') && he2(1) ~= 0), delete(he2); end
+    if (exist('hc2', 'var') && hc2(1) ~= 0), delete(hc2); end
     
     % Plot raw data.
     subplot(1,2,1)
-    set(ph(1), 'XData', mag(:,1), 'YData', mag(:,2), 'ZData', mag(:,3), ...
-               'Color', 'c', 'Marker', 'o', 'MarkerSize', 7, ... 
-               'MarkerEdgeColor', [0.3 0.7 1], 'lineWidth', 2);
     
     % Plot additional data if we have valid calibration factors. 
-    if v~=0
-        he = DrawElipsoid(v, 15, 3000, 0.1, repmat(0.5, 1, 3));
+    if (v(1)~=0 && isreal(v))
+        set(ph(1), 'XData', mag(:,1), 'YData', mag(:,2), 'ZData', mag(:,3), ...
+               'Color', 'c', 'Marker', 'o', 'MarkerSize', 7, ... 
+               'MarkerEdgeColor', [0.3 0.7 1], 'lineWidth', 2);
+           
+        he = DrawElipsoid(v, 50, 3000, 0.1, repmat(0.5, 1, 3));
         hcp = DrawCooSystem2([0 0 0], rotx(0), [700 700 700], 4, true);
         hc = DrawCooSystem2(B', inv(Ainv), [700 700 700], 3, true);
     end
@@ -107,26 +108,26 @@ while ExitCondition(mag, e, true)
     
     % Plot calibrated data.
     subplot(1,2,2)
-    if v~=0
+    if (v(1)~=0 && isreal(v))
         % remove magnetometer offset
         magC = mag - repmat(B', size(mag, 1), 1);
         
         % apply scale factors
         cal = [];
-        cal(:,1) = Ainv(1,1)*magC(:,1) + Ainv(1,2)*magC(:,2) +Ainv(1,3)*magC(:,3);
-        cal(:,2) = Ainv(2,1)*magC(:,1) + Ainv(2,2)*magC(:,2) +Ainv(2,3)*magC(:,3);
-        cal(:,3) = Ainv(3,1)*magC(:,1) + Ainv(3,2)*magC(:,2) +Ainv(3,3)*magC(:,3);
+        cal(:,1) = Ainv(1,1)*magC(:,1) + Ainv(1,2)*magC(:,2) + Ainv(1,3)*magC(:,3);
+        cal(:,2) = Ainv(2,1)*magC(:,1) + Ainv(2,2)*magC(:,2) + Ainv(2,3)*magC(:,3);
+        cal(:,3) = Ainv(3,1)*magC(:,1) + Ainv(3,2)*magC(:,2) + Ainv(3,3)*magC(:,3);
         
         % Compute offsets and scale factors on calibrated data.
         [B, Ainv, v] = GetOffsetsAndScaleFactors(cal, 0.569);
         
         % Plot additional data if we have valid calibration factors. 
-        if v~=0
+        if (v(1)~=0 && isreal(v))
             set(ph(2), 'XData', cal(:,1), 'YData', cal(:,2), 'ZData', cal(:,3), ... 
                        'Color', 'c', 'Marker', 'o', 'MarkerSize', 7, ... 
                        'MarkerEdgeColor', [0.3 0.7 1], 'lineWidth', 2);
                    
-            he2 = DrawElipsoid(v, 15, 2, 0.1, repmat(0.5, 1, 3));
+            he2 = DrawElipsoid(v, 50, 2, 0.1, repmat(0.5, 1, 3));
             hc2 = DrawCooSystem2(B', inv(Ainv), [1 1 1], 3, true);
         end
     end
