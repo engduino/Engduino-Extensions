@@ -524,7 +524,7 @@ classdef engduino < handle
                         s = [s e.PACKAGE_DELIMITER_CHR num2str(vals(i))];
                     end
                     s = [s e.PACKAGE_STOP_CHR]; % Add stop character
-                    disp(['PACKAGE:' s]);
+                    %disp(['PACKAGE:' s]);
                     fwrite(e.aser, s); % Send package
                     
                 case e.PACKAGE_TYPE_2
@@ -937,7 +937,7 @@ classdef engduino < handle
             % pin:   Arduino's notation of pin number e.g. Dxx
             % value: e.PIN_VALUE_HIGH or e.PIN_VALUE_LOW state
             % width: Pulse width in seconds (optional)
-            % Input parameters can be scalars or vectors enabling setting
+            % Input parametest can be scalars or vectors enabling setting
             % multiple pins at once.
             %
             % OUTPUTS
@@ -1017,7 +1017,7 @@ classdef engduino < handle
             % pin:   Arduino's notation of pin number e.g. Dxx
             % value: the duty cycle: between 0 (always off) and 255 (always on). 
             % width: Pulse width in seconds (optional)
-            % NOTE: Input parameters can be scalars or vectors enabling setting
+            % Input parametest can be scalars or vectors enabling setting
             % multiple pins at once.
             %
             % OUTPUTS
@@ -1411,46 +1411,36 @@ classdef engduino < handle
         function [pins] = digitalRead(e, pin)
             % Returns digital pins state as a n x 2 array, representing 
             % KEY-VALUE pairs of digital pins.
-            %
-            % INPUTS
-            % pin:   Arduino's notation of pin number e.g. Dxx
-            % Input parameter can be scalars or vectors enabling setting
-            % multiple pins at once.
-            %
-            % OUTPUTS
-            % res = 0 -> OK
-            % res < 0 -> ERROR code
+            % 1 -> PIN_VALUE_HIGH
+            % 0 -> PIN_VALUE_LOW
             %
             % Examples:
-            % Set D13# duty-cycle on 123 unconditionally:
-            % analogWrite(13, 123);
-            %
-            % Examples:
-            % return KEY-VALUE pair of digital pins D13:
-            % digitalRead(13); 
-            %
-            % Will return KEY-VALUE pairs of digital pins D13, D7 and D12:
-            % digitalRead([13; 7; 12]);
+            % getDigitalPinsValue([13; 7; 12]); 
+            % Will return KEY-VALUE pairs of digital pins D13, D7 and D12. 
             
-            % Initial return array.
-            pins = [-1, -1];
+            pins = [0, -1];
             
             % Don't do anything if we are in "demo" mode.
             if(e.comm == e.COMM_DEMO), 
                 return; 
             end;
             
-            % Check parameters.
+            % Check parameters
             if (length(pin) < 1) % Array of the input parameters must include at leat one pin number. 
-                e.showError('digitalRead ERROR: Wrong number of input values! Size of input vector must be larger than zero.');
+                e.showError('getDigitalPinsValue ERROR: Wrong number of input values! Size of input vector must be larger than zero.');
                 return;
             end
             
-            % Add additional parameter requested by engduino protocol and
-            % reshape it.
-            vals = reshape([pin(:), zeros(length(pin(:)), 1)]', length(pin(:))*2, 1)';
+            if (size(vals, 1) < size(pin, 2)) % Input array must be n x 1.
+                e.showError('getDigitalPinsValue ERROR: Input array must be n x 1.');
+                return;
+            end
             
-            % Check e.aser for validity if e.chks is true.
+            % Add additional parameter requested by engduino protocol
+            vals = [vals, zeros(length(vals), 1)];
+            vals = reshape(vals', numel(vals), 1)';
+            
+            % Check e.aser for validity if e.chks is true
             if e.chks,
                 errstr = engduino.checkser(e.aser, 'validopen');
                 if ~isempty(errstr), error(errstr); end
@@ -1459,24 +1449,24 @@ classdef engduino < handle
             e.header.packageType = e.PACKAGE_TYPE_1;
             e.header.commandID = e.COM_GET_PINS_DIGITAL_VALUE;
             
-            e.sendPackage(vals);        % Send package without parameters.
+            e.sendPackage(vals); % Send package without parameters
             e.callbackEnable = false;
-            c = e.waitOnResponse();     % Wait on response.
+            c = e.waitOnResponse(); % Wait on response
             e.callbackEnable = true;
-            [h, v] = e.parsePackage(c); % Parse package.
+            [h, v] = e.parsePackage(c); % Parse package
             
-            % Check received package.
+            % Check received package
             if (h.commandID ~= e.header.commandID), 
-                e.showError(['digitalRead ERROR: Wrong command ID!  Content -> ' c]);
+                e.showError(['getDigitalPinsValue ERROR: Wrong command ID!  Content -> ' c]);
                 return;
             end
             
             if (length(v) < 2), 
-                e.showError(['digitalRead ERROR: Wrong number of values!  Content -> ' c]);
+                e.showError(['getDigitalPinsValue ERROR: Wrong number of values!  Content -> ' c]);
                 return;
             end
             
-            % Finally, read the received value.
+            % Finally, read the received value
             pins = reshape(v, 2, numel(v)/2)';
         end
         
