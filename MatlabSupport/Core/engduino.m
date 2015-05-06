@@ -67,6 +67,10 @@ classdef engduino < handle
         LED_COUNT = 16
         LED_DEFAULT_COLOR = 7
         LED_DEFAULT_BRIGHTNESS = 0
+        
+        % IO
+        PINS_A_COUNT = 5    % Analog pins
+        PINS_D_COUNT = 18   % Digital pins
     end
     
     % Defines visable
@@ -82,13 +86,19 @@ classdef engduino < handle
         COLOR_OFF =     7 
         
         % IO Pins
-        PIN_TYPE_INPUT =    0
-        PIN_TYPE_OUTPUT =   1
-        PIN_VALUE_LOW =     0
-        PIN_VALUE_HIGH =    1
+        PIN_TYPE_INPUT =        0
+        PIN_TYPE_OUTPUT =       1
+        PIN_TYPE_INPUT_PULLUP = 2
+        PIN_VALUE_LOW =         0
+        PIN_VALUE_HIGH =        1
         
         % Status
         STATUS_OVERSAMPLING = 0	% Enable internal oversampling
+        
+        % IO
+        PINS_A = [0, 1, 2, 3, 4, 5, 6, 7, 8, 10]
+        PINS_D = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+        MAX_IO = 10;
     end
     
     properties (SetAccess=private, GetAccess=private)
@@ -112,6 +122,7 @@ classdef engduino < handle
         leds_r = ones(1, engduino.LED_COUNT).*engduino.LED_DEFAULT_BRIGHTNESS;
         leds_g = ones(1, engduino.LED_COUNT).*engduino.LED_DEFAULT_BRIGHTNESS;
         leds_b = ones(1, engduino.LED_COUNT).*engduino.LED_DEFAULT_BRIGHTNESS;
+        pins_d = nan(length(engduino.PINS_D), 1);
         
         serialProperties = struct('Parity', 'none', 'DataBits', 8, 'FlowControl', 'none', 'Terminator', engduino.PACKAGE_STOP_CHR);
         showErrorEnable = 1;
@@ -827,30 +838,67 @@ classdef engduino < handle
             res = e.RES_OK; 
         end
         
-        % Set digital pins type
-        function res = setDigitalPinsType(e, vals)
-            % Set digital pins type
-            % All parameters must be specified as KEY-VALUE pair, where KEY
-            % donates to a pin number and VALUE donates to a pin type. Type
-            % of the pin can be INPUT or OUTPUT.
+        % Set digital pin mode
+        function res = pinMode(e, pin, value)
+            % Configures the specified pin to behave either as an input or
+            % an output. See the description of digital pins for details on
+            % the functionality of the pins. It is possible to enable the
+            % internal pullup resistors with the mode INPUT_PULLUP.
+            % Additionally, the INPUT mode explicitly disables the internal
+            % pullups.
             %
             % INPUTS
-            % val = [KEY1, VALUE1; KEY2, VALUE2; ... ; KEYn, VALUEn]
+            % pin:   Arduino's notation of pin number e.g. Dxx
+            % value: e.PIN_TYPE_OUTPUT, e.PIN_TYPE_INPUT_PULLUP or 
+            % e.PIN_TYPE_INPUT_PULLUP
+            % Input parameters can be scalars or vectors enabling setting
+            % multiple pins at once.
             %
             % OUTPUTS
             % res = 0 -> OK
             % res < 0 -> ERROR code
             %
             % Examples:
-            % setDigitalPinsType([3, e.PIN_TYPE_INPUT; 8, e.PIN_TYPE_OUTPUT]); 
-            % Set D3 as a digital input and D8 as a digital output.
-            
-            % Check parameters
-            if (~(size(vals, 2) == 2)) % Array size of the input parameters must be n x 2 
-                e.showError('setDigitalPinsType ERROR: Wrong number of input values! Size of input array must be n x 2.');
+            % Set D3 as a digital input
+            % pinMode(3, e.PIN_TYPE_INPUT);
+            %
+            % Set D3 as a digital input and D8 as a digital output:
+            % pinMode([3, e.PIN_TYPE_INPUT; 8, e.PIN_TYPE_OUTPUT]);
+
+            % Check parameters.
+            if (isempty(pin) || isempty(value))
+                e.showError('pinMode ERROR: Both input parameter "pin" and "value" need to be specified!');
                 res = e.RES_ERR;
                 return;
             end
+            
+            % Check if input parameters are vectors.
+            if (~isvector(pin) || ~isvector(value))
+                e.showError('pinMode ERROR: Input parameters must be vectors!');
+                res = e.RES_ERR;
+                return;
+            end
+            
+            % Check if input parameters are the same length.
+            if ~(isequal([length(pin); length(value)], ...
+                repmat(length(pin), 2, 1)))
+                e.showError('pinMode ERROR: Input parameters must have the same length!');
+                res = e.RES_ERR;
+                return;
+            end
+            
+            % Check parameters.
+            % Array of the input parameters must smaller than MAX_IO.
+            if (length(pin) > e.MAX_IO) 
+                str = 'pinMode ERROR: ';
+                str = [str ' Size of input vector must be '];
+                str = [str ' smaller than ' num2str(e.MAX_IO)];
+                e.showError(str);
+                return;
+            end
+            
+            % Reshape input parameters.
+            vals = reshape([pin(:),  value(:)]', length(pin)*2, 1)';
             
             % Check e.aser for validity if e.chks is true.
             if e.chks,
@@ -862,37 +910,74 @@ classdef engduino < handle
             e.header.packageType = e.PACKAGE_TYPE_1;
             e.header.commandID = e.COM_SET_PINS_DIGITAL_TYPE;
             
-            % send package
+            % Send package.
             e.sendPackage(vals); 
             
-            % set the function retutn status
+            % Set the function retutn status.
             res = e.RES_OK; 
         end
         
-        % Set analog pins type
-        function res = setAnalogPinsType(e, vals)
-            % Set analog pins type
-            % All parameters must be specified as KEY-VALUE pair, where KEY
-            % donates to a pin number and VALUE donates to a pin type. Type
-            % of the pin can be INPUT or OUTPUT.
+         % Set analog pin mode
+        function res = pinModeA(e, pin, value)
+            % Configures the specified pin to behave either as an input or
+            % an output. See the description of digital pins for details on
+            % the functionality of the pins. It is possible to enable the
+            % internal pullup resistors with the mode INPUT_PULLUP.
+            % Additionally, the INPUT mode explicitly disables the internal
+            % pullups.
             %
             % INPUTS
-            % val = [KEY1, VALUE1; KEY2, VALUE2; ... ; KEYn, VALUEn]
+            % pin:   Arduino's notation of pin number e.g. Dxx
+            % value: e.PIN_TYPE_OUTPUT, e.PIN_TYPE_INPUT_PULLUP or 
+            % e.PIN_TYPE_INPUT_PULLUP
+            % Input parameters can be scalars or vectors enabling setting
+            % multiple pins at once.
             %
             % OUTPUTS
             % res = 0 -> OK
             % res < 0 -> ERROR code
             %
             % Examples:
-            % setAnalogPinsType([1, e.PIN_TYPE_INPUT; 3, e.PIN_TYPE_OUTPUT]); 
-            % Set A1 as an analog input and A3 as an analod output.
-            
-            % Check parameters
-            if (~(size(vals, 2) == 2)) % Array size of the input parameters must be n x 2 
-                e.showError('setAnalogPinsType ERROR: Wrong number of input values! Size of input array must be n x 2.');
+            % Set D3 as a digital input
+            % pinMode(3, e.PIN_TYPE_INPUT);
+            %
+            % Set A3 as an analog input and A8 as a analog output:
+            % pinMode([3, e.PIN_TYPE_INPUT; 2, e.PIN_TYPE_OUTPUT]);
+
+            % Check parameters.
+            if (isempty(pin) || isempty(value))
+                e.showError('pinModeA ERROR: Both input parameter "pin" and "value" need to be specified!');
                 res = e.RES_ERR;
                 return;
             end
+            
+            % Check if input parameters are vectors.
+            if (~isvector(pin) || ~isvector(value))
+                e.showError('pinModeA ERROR: Input parameters must be vectors!');
+                res = e.RES_ERR;
+                return;
+            end
+            
+            % Check if input parameters are the same length.
+            if ~(isequal([length(pin); length(value)], ...
+                repmat(length(pin), 2, 1)))
+                e.showError('pinModeA ERROR: Input parameters must have the same length!');
+                res = e.RES_ERR;
+                return;
+            end
+            
+            % Check parameters.
+            % Array of the input parameters must smaller than MAX_IO.
+            if (length(pin) > e.MAX_IO) 
+                str = 'pinModeA ERROR: ';
+                str = [str ' Size of input vector must be '];
+                str = [str ' smaller than ' num2str(e.MAX_IO)];
+                e.showError(str);
+                return;
+            end
+            
+            % Reshape input parameters.
+            vals = reshape([pin(:),  value(:)]', length(pin)*2, 1)';
             
             % Check e.aser for validity if e.chks is true.
             if e.chks,
@@ -904,10 +989,10 @@ classdef engduino < handle
             e.header.packageType = e.PACKAGE_TYPE_1;
             e.header.commandID = e.COM_SET_PINS_ANALOG_TYPE;
             
-            % send package
+            % Send package.
             e.sendPackage(vals); 
             
-            % set the function retutn status
+            % Set the function retutn status.
             res = e.RES_OK; 
         end
         
@@ -976,6 +1061,16 @@ classdef engduino < handle
                 repmat(length(pin), 3, 1)))
                 e.showError('digitalWrite ERROR: Input parameters must have the same length!');
                 res = e.RES_ERR;
+                return;
+            end
+            
+            % Check parameters.
+            % Array of the input parameters must smaller than MAX_IO.
+            if (length(pin) > e.MAX_IO) 
+                str = 'digitalWrite ERROR: ';
+                str = [str ' Size of input vector must be '];
+                str = [str ' smaller than ' num2str(e.MAX_IO)];
+                e.showError(str);
                 return;
             end
             
@@ -1057,6 +1152,16 @@ classdef engduino < handle
                 repmat(length(pin), 3, 1)))
                 e.showError('analogWrite ERROR: Input parameters must have the same length!');
                 res = e.RES_ERR;
+                return;
+            end
+            
+             % Check parameters.
+            % Array of the input parameters must smaller than MAX_IO.
+            if (length(pin) > e.MAX_IO) 
+                str = 'analogWrite ERROR: ';
+                str = [str ' Size of input vector must be '];
+                str = [str ' smaller than ' num2str(e.MAX_IO)];
+                e.showError(str);
                 return;
             end
             
@@ -1408,7 +1513,7 @@ classdef engduino < handle
         end
         
         % Get digital pins state
-        function [pins] = digitalRead(e, pin)
+        function [ret] = digitalRead(e, pin)
             % Returns digital pins state as a n x 2 array, representing 
             % KEY-VALUE pairs of digital pins.
             %
@@ -1418,22 +1523,17 @@ classdef engduino < handle
             % multiple pins at once.
             %
             % OUTPUTS
-            % res = 0 -> OK
-            % res < 0 -> ERROR code
+            % ret: A n x 2 array of requested pins state
             %
             % Examples:
-            % Set D13# duty-cycle on 123 unconditionally:
-            % analogWrite(13, 123);
-            %
-            % Examples:
-            % return KEY-VALUE pair of digital pins D13:
+            % return KEY-VALUE pair of digital pin D13:
             % digitalRead(13); 
             %
             % Will return KEY-VALUE pairs of digital pins D13, D7 and D12:
             % digitalRead([13; 7; 12]);
             
             % Initial return array.
-            pins = [-1, -1];
+            ret = [-1, -1];
             
             % Don't do anything if we are in "demo" mode.
             if(e.comm == e.COMM_DEMO), 
@@ -1441,8 +1541,13 @@ classdef engduino < handle
             end;
             
             % Check parameters.
-            if (length(pin) < 1) % Array of the input parameters must include at leat one pin number. 
-                e.showError('digitalRead ERROR: Wrong number of input values! Size of input vector must be larger than zero.');
+            % Array of the input parameters must include at leat one pin 
+            % number and not more than MAX_IO.
+            if (length(pin) < 1 || length(pin) > e.MAX_IO) 
+                str = 'digitalRead ERROR: Wrong number of input values!';
+                str = [str ' Size of input vector must be larger than 0 and'];
+                str = [str ' smaller than ' num2str(e.MAX_IO)];
+                e.showError(str);
                 return;
             end
             
@@ -1473,6 +1578,92 @@ classdef engduino < handle
             
             if (length(v) < 2), 
                 e.showError(['digitalRead ERROR: Wrong number of values!  Content -> ' c]);
+                return;
+            end
+            
+            % Finally, read the received value.
+            ret = reshape(v, 2, numel(v)/2)';
+        end
+        
+        % Get analog pins state
+        function [pins] = analogRead(e, pin)
+            % Returns analog pins state as a n x 2 array, representing
+            % KEY-VALUE pairs of digital pins. 
+            %
+            % Reads the value from the specified analog pin. The Engduino
+            % board contains a 5 channel 10-bit analog to digital
+            % converter. This means that it will map input voltages between
+            % 0 and 3.3 volts into integer values between 0 and 1023. This
+            % yields a resolution between readings of: 3.3 volts / 1024
+            % units or, .0032 volts (3.2 mV) per unit.  It takes about 100
+            % microseconds. 
+            %
+            % NOTE: If the analog input pin is not connected to anything,
+            % the value returned by analogRead() will fluctuate based on a
+            % number of factors (e.g. the values of the other analog
+            % inputs, how close your hand is to the board, etc.).
+            %
+            % INPUTS
+            % pin:   Arduino's notation of pin number from 0 to 5. E.g. Axx
+            % Input parameter can be scalars or vectors enabling setting
+            % multiple pins at once.
+            %
+            % OUTPUTS
+            % ret: A n x 2 array of requested pins state
+            %
+            % Examples:
+            % return KEY-VALUE pair of analog pin A2:
+            % analogRead(2); 
+            %
+            % Will return KEY-VALUE pairs of analog pins A1, A2 and A4:
+            % analogRead([1; 2; 4]);
+            
+            % Initial return array.
+            pins = [-1, -1];
+            
+            % Don't do anything if we are in "demo" mode.
+            if(e.comm == e.COMM_DEMO), 
+                return; 
+            end;
+            
+            % Check parameters.
+            % Array of the input parameters must include at leat one pin 
+            % number and not more than MAX_IO.
+            if (length(pin) < 1 || length(pin) > e.MAX_IO) 
+                str = 'analogRead ERROR: Wrong number of input values!';
+                str = [str ' Size of input vector must be larger than 0 and'];
+                str = [str ' smaller than ' num2str(e.MAX_IO)];
+                e.showError(str);
+                return;
+            end
+            
+            % Add additional parameter requested by engduino protocol and
+            % reshape it.
+            vals = reshape([pin(:), zeros(length(pin(:)), 1)]', length(pin(:))*2, 1)';
+            
+            % Check e.aser for validity if e.chks is true.
+            if e.chks,
+                errstr = engduino.checkser(e.aser, 'validopen');
+                if ~isempty(errstr), error(errstr); end
+            end
+            
+            e.header.packageType = e.PACKAGE_TYPE_1;
+            e.header.commandID = e.COM_GET_PINS_ANALOG_VALUE;
+            
+            e.sendPackage(vals);        % Send package without parameters.
+            e.callbackEnable = false;
+            c = e.waitOnResponse();     % Wait on response.
+            e.callbackEnable = true;
+            [h, v] = e.parsePackage(c); % Parse package.
+            
+            % Check received package.
+            if (h.commandID ~= e.header.commandID), 
+                e.showError(['analogRead ERROR: Wrong command ID!  Content -> ' c]);
+                return;
+            end
+            
+            if (length(v) < 2), 
+                e.showError(['analogRead ERROR: Wrong number of values!  Content -> ' c]);
                 return;
             end
             
@@ -1680,6 +1871,30 @@ classdef engduino < handle
         function val = get.leds_b(e)
             val = e.leds_b_;
         end
+        
+        % Workaround for get values
+%         function val = pins_a(e, pins)
+%             if (~exist('pins', 'var') || pins == ':')
+%                 pins = e.PINS_A;
+%             end
+%             val = e.analogRead(pins);
+%         end
+%         
+%         function val = pins_d(e, pins)
+%             if (~exist('pins', 'var') || pins == ':')
+%                 pins = e.PINS_D(1:e.MAX_IO);
+%             end
+%             val = e.digitalRead(pins);
+%         end
+%         
+%         function set.pins_d(e, val)
+%            e.digitalWrite(find(~isnan(val)), val(~isnan(val)));
+%            pins_d = nan(length(engduino.PINS_D), 1);
+%         end
+%         
+%         function val = get.pins_d(e)
+%             val = e.pins_d;
+%         end
         
     end
     
