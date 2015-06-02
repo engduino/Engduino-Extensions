@@ -1,4 +1,4 @@
-%% RunningLeds.m demo example.
+%% LightLeds.m demo example.
 %
 % Description:
 % The aim of this example is to show some of the methods of
@@ -28,12 +28,9 @@ if (~exist('e', 'var'))
     % engduino('demo');
     e = engduino();
 end
- 
-% Set initial LEDs state
-leds = [0, 1, 2];
- 
+
 % Set frequency [Hz]. Steps per second.
-frequency = 5;
+frequency = 10;
  
 %% Main loop
 % Execute loop until exit condition is met.
@@ -42,34 +39,21 @@ disp('- Press ''ESC''')
 disp('- Press ''q''')
 disp('- Press a button on the Engduino board')
 disp('- Close the figure')
-
 while ExitCondition([], e, true)
+
+    % Lowpass filter
+    light = 0.7*light + 0.3*e.getLight(); 
     
-    % Update LEDs by sending command to the Engduino board.
-    e.setLedsExact(mod(leds, 16), [e.COLOR_RED, e.COLOR_GREEN, e.COLOR_BLUE]);
-    
-    % Update internal 'leds' array holding current state of LEDs.
-    leds = leds + [1, 1, 1];
+    % Turn on Leds
+    % The result is a 10 bit value - so in a range 0-1023 If we spread this
+    % between our 16 LEDs evenly, it means we have to divide the value
+    % obtained by 64 to tell us what the biggest numbered LED we have to
+    % light should be.
+    leds = ones(1, 16).*e.COLOR_OFF;
+    lval = floor(light/64);
+    leds(1:lval) = ones(1, length(lval)).*e.COLOR_WHITE;
+    e.setLeds(leds);
     
     % Pause for one time interval.
     pause(1/frequency);
-    
-    % Speed-up a bit.
-    frequency = frequency + 0.3;
-    
-    % Check if the frequency is too high.
-    if(frequency > 100)
-        % Reset the frequency variable
-        frequency = 5;
-        
-        % Set all LEDs on red, green and blue colour for a short amount of 
-        % time (500 milliseconds).  
-        e.setLedsAll(e.COLOR_RED);
-        pause(0.5);
-        e.setLedsAll(e.COLOR_GREEN);
-        pause(0.5);
-        e.setLedsAll(e.COLOR_BLUE);
-        pause(0.5);
-        e.setLedsAll(e.COLOR_OFF);
-    end
 end

@@ -46,7 +46,8 @@ disp('- Close the figure')
 while ExitCondition([], e, true)
     
     % Update LEDs by sending command to the Engduino board.
-    e.setLedsExact(mod(leds, 16), [e.COLOR_RED, e.COLOR_GREEN, e.COLOR_BLUE]);
+    e.setLedsExact(mod(leds, 16), 
+                    [e.COLOR_RED, e.COLOR_GREEN, e.COLOR_BLUE]);
     
     % Update internal 'leds' array holding current state of LEDs.
     leds = leds + [1, 1, 1];

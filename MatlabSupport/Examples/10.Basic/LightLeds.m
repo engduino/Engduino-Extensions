@@ -1,26 +1,34 @@
-% LightLeds.m demo example.
+%% LightLeds.m demo example.
 %
-% Description:
+% Description: 
+% The aim of this example is to detect light intensity and turn on LEDs
+% based on the intensity level. To avoid rapid changes in measured light
+% intensity we added a simple Low-pass filter. The result after filtering
+% is more smooth signal without spikes.
 %
 % July 2014, Engduino team: support@engduino.org
- 
-% Clear all variables and objects 
-clear all; close all;
- 
-% Create Engduino object and open COM port. You need to select active COM 
-% port on which the Engduino is connected. E.g. COM47. 
-% To open 'Bluetooth' port change initialization as suggested in Initial.m 
-% E.g. e = engduino('Bluetooth', 'your_device_name');
-% Set "port = demo" to enable demo run.
-port = 'COM16';
-e = engduino(port);
+% 
 
 %% Initialize variables
-light = e.getLight();
+
+% Check if the Engduino object already exists. Otherwise initialize it.
+if (~exist('e', 'var'))
+    % Create Engduino object and open COM port. You do not need to select
+    % an active COM port, as it should be detected automatically. However,
+    % in the case of unsuccessfull connection, you may initialize Engduino
+    % object with passing the active COM port. E.g. e = engduino('COM8');
+    % To open the 'Bluetooth' port you need to initialize the Engduino
+    % object with the 'Bluetooth' keyword and your Bluetooth device name.
+    % E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by
+    % initialize the Engduino object with 'demo' keyword. E.g. e =
+    % engduino('demo');
+    e = engduino();
+end
 
 % Set frequency [Hz]. Steps per second.
 frequency = 10;
  
+%% Main loop
 % Execute loop until exit condition is met.
 disp('You can terminate execution by:')
 disp('- Press ''ESC''')
@@ -33,8 +41,12 @@ while ExitCondition([], e, true)
     light = 0.7*light + 0.3*e.getLight(); 
     
     % Turn on Leds
+    % The result is a 10-bit value - so in a range 0-1023 If we spread this
+    % between our 16 LEDs evenly, it means we have to divide the value
+    % obtained by 64 to tell us what the biggest numbered LED we have to
+    % light should be.
     leds = ones(1, 16).*e.COLOR_OFF;
-    lval = floor(light/60);
+    lval = floor(light/64);
     leds(1:lval) = ones(1, length(lval)).*e.COLOR_WHITE;
     e.setLeds(leds);
     
