@@ -757,7 +757,7 @@ classdef engduino < handle
         % Set Leds All with brithness
         function res = setLedsAllB(e, ledsColor, brightness)
             % res = setLedsAllB(e, ledsColor)
-            % Set the same colour and brightness on all 16 RBG Leds.
+            % Set the same colour and brightness on all 16 RBG Leds on the device.
             %
             % Examples:
             % setLedsAllB(e.COLOR_RED, 10);

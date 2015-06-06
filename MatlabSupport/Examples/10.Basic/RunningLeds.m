@@ -19,7 +19,7 @@
 if (~exist('e', 'var'))
     % Create Engduino object and open COM port. You do not need to select
     % an active COM port, as it should be detected automatically. However,
-    % in the case of unsuccessfull connection, you may initialize Engduino
+    % in the case of unsuccessful connection, you may initialize Engduino
     % object with passing the active COM port. E.g. e = engduino('COM8');
     % To open the 'Bluetooth' port you need to initialize the Engduino
     % object with the 'Bluetooth' keyword and your Bluetooth device name.

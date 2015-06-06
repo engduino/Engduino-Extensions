@@ -15,7 +15,7 @@
 if (~exist('e', 'var'))
     % Create Engduino object and open COM port. You do not need to select
     % an active COM port, as it should be detected automatically. However,
-    % in the case of unsuccessfull connection, you may initialize Engduino
+    % in the case of unsuccessful connection, you may initialize Engduino
     % object with passing the active COM port. E.g. e = engduino('COM8');
     % To open the 'Bluetooth' port you need to initialize the Engduino
     % object with the 'Bluetooth' keyword and your Bluetooth device name.
@@ -26,7 +26,10 @@ if (~exist('e', 'var'))
 end
 
 % Set frequency [Hz]. Steps per second.
-frequency = 10;
+frequency = 25;
+
+% Mid value of light's full scale (2^10).
+light_val = 2^9;
  
 %% Main loop
 % Execute loop until exit condition is met.
@@ -38,15 +41,17 @@ disp('- Close the figure')
 while ExitCondition([], e, true)
 
     % Lowpass filter
-    light = 0.7*light + 0.3*e.getLight(); 
+    % Higher value of alpha (a) will follow into less filtered signal.
+    a = 0.2;
+    light_val = (1-a)*light_val + a*e.getLight(); 
     
-    % Turn on Leds
-    % The result is a 10-bit value - so in a range 0-1023 If we spread this
-    % between our 16 LEDs evenly, it means we have to divide the value
+    % Turn on Leds 
+    % The result is a 10-bit value - so in a range [0-1023]. If we spread
+    % this between our 16 LEDs evenly, it means we have to divide the value
     % obtained by 64 to tell us what the biggest numbered LED we have to
-    % light should be.
+    % turn on.
     leds = ones(1, 16).*e.COLOR_OFF;
-    lval = floor(light/64);
+    lval = floor(light_val/64);
     leds(1:lval) = ones(1, length(lval)).*e.COLOR_WHITE;
     e.setLeds(leds);
     
