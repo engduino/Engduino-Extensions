@@ -145,7 +145,7 @@ while ExitCondition(circBuff, e, true)
     % beats detected in circular buffer. The 'trimmean' function is used to
     % minimize efect of outliners.
     t = time(~isnan(circBuff(:, 3)), 1);
-    dt = (t(2:end) - t(1:end-1))*60;
+    dt = 60./(t(2:end) - t(1:end-1));
     bps = trimmean(dt, 50);
     bps_std = std(dt(dt < bps*1.3 & dt > bps*0.7));
     
