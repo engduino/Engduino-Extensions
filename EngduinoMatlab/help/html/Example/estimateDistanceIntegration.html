@@ -1,0 +1,346 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>EstimateDistanceIntegration.m demo example.</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-07-29"><meta name="DC.source" content="estimateDistanceIntegration.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>EstimateDistanceIntegration.m demo example.</h1><!--introduction--><p>This example uses the accelerometer to estimate distance travelled. Function returns acceleration in [x,y,z] directions. Unit is [G=10m/s^2] We only use x-axis on the accelerometer for calculation. Make sure that the Engduino device is placed with the LEDs facing downwards. Upload the code, position the accelerometer, press the button to start and press the button to stop the calculation immediately.</p><p>July 2015, Engduino team: <a href="mailto:support@engduino.org">support@engduino.org</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Initialize variables</a></li><li><a href="#2">Initialise accelerometer reading</a></li><li><a href="#3">Main Program loop</a></li></ul></div><h2>Initialize variables<a name="1"></a></h2><p>Check if the Engduino object already exists. Otherwise initialize it.</p><pre class="codeinput"><span class="keyword">if</span> (~exist(<span class="string">'e'</span>, <span class="string">'var'</span>))
+    <span class="comment">% Create Engduino object and open COM port. You do not need to select</span>
+    <span class="comment">% an active COM port, as it should be detected automatically. However,</span>
+    <span class="comment">% in the case of unsuccessful connection, you may initialize Engduino</span>
+    <span class="comment">% object with passing the active COM port. E.g. e = engduino('COM8');</span>
+    <span class="comment">% To open the 'Bluetooth' port you need to initialize the Engduino</span>
+    <span class="comment">% object with the 'Bluetooth' keyword and your Bluetooth device name.</span>
+    <span class="comment">% E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by</span>
+    <span class="comment">% initialize the Engduino object with 'demo' keyword. E.g. e =</span>
+    <span class="comment">% engduino('demo');</span>
+    e = engduino();
+<span class="keyword">end</span>
+
+<span class="comment">% Set reading frequency [Hz] - readings per second.</span>
+frequency = 100;
+
+<span class="comment">% Set multiplier to convert accelerometer data to acceleration m/s^2</span>
+multiplier = 26;
+
+<span class="comment">% Set threshold to ignore small noise in acceleration</span>
+acc_threshold = 0.5
+vel_threshold = 0.3;
+
+<span class="comment">% Initialise variables for calculation</span>
+previous_time =0;
+previous_velocity =0;
+total_displacement = 0;
+current_velocity = 0;
+
+<span class="comment">% filter</span>
+gxFilt = 0;
+accFilt =0;
+velFilt =0;
+
+<span class="comment">% filter control coefficient</span>
+alpha = 0.5;
+beta = 0.9;
+gamma = 0.9;
+
+current_time = repmat(now, 2, 4);
+t0 = now;
+
+pause(1);
+
+<span class="comment">% Wait to start calculation</span>
+<span class="keyword">while</span>(not(e.getButton()))
+<span class="keyword">end</span>
+</pre><h2>Initialise accelerometer reading<a name="2"></a></h2><pre class="codeinput"><span class="keyword">for</span> i=1:10
+    newReading = e.getAccelerometer();
+    gx = newReading(1);
+    gy = newReading(2);
+    gz = newReading(3);
+    <span class="comment">% high pass filter accelerometer output</span>
+    gxFilt_filt = gx - ((1-alpha)*gxFilt + alpha*gx);
+<span class="keyword">end</span>
+
+<span class="comment">% accelerometer data is multiplied to get 1g=10m/s^2</span>
+init_accx = (floor(gxFilt*100)*multiplier/100);
+</pre><h2>Main Program loop<a name="3"></a></h2><pre class="codeinput"><span class="keyword">while</span> (not(e.getButton()))
+    <span class="comment">% Read acceleration vector from Engduino's accelerometer sensor.</span>
+    newReading = e.getAccelerometer();
+
+    gx = newReading(1);
+    gy = newReading(2);
+    gz = newReading(3);
+
+    <span class="comment">% high pass filter accelerometer output</span>
+    gxFilt = gx - ((1-alpha)*gxFilt + alpha*gx);
+
+    <span class="comment">% subplot raw X acceleration vector</span>
+    subplot(1,2,1)
+    <span class="comment">% clear the current axis</span>
+    cla;
+    line([0 gx], [0 0], <span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'LineWidth'</span>,2,<span class="string">'Marker'</span>,<span class="string">'o'</span>);
+    <span class="comment">% limit plot to +/- 1.25g in all directions and make axis square</span>
+    limits = 2.5;
+    axis([-limits limits -limits limits]);
+    axis <span class="string">square</span>;
+    grid <span class="string">on</span>
+    xlabel(<span class="string">'X-axis acceleration (raw)'</span>)
+
+    <span class="comment">% calculate the angle of the resultant acceleration vactor and print</span>
+    theta = atand(gy/gx);
+
+    <span class="comment">% subplot filtered X acceleration vector</span>
+    subplot(1,2,2)
+    cla;
+    line([0 gxFilt], [0,0],<span class="string">'Color'</span>, <span class="string">'r'</span>, <span class="string">'LineWidth'</span> , 2, <span class="string">'Marker'</span>, <span class="string">'o'</span>);
+    <span class="comment">% limit plot to +/- 1.25g in all directions and make axis square</span>
+    limits = 2.5;
+    axis([-limits limits -limits limits]);
+    axis <span class="string">square</span>;
+    grid <span class="string">on</span>
+    xlabel(<span class="string">'X-axis acceleration (filtered)'</span>)
+
+
+    acceleration = (floor(gxFilt*100)*multiplier/100 - init_accx);
+
+    accFilt = (1-beta)*accFilt + beta*acceleration;
+    <span class="comment">% ignore small value acceleration due to noise</span>
+    <span class="keyword">if</span>(accFilt&gt;-acc_threshold&amp;&amp;accFilt&lt;acc_threshold)
+        accFilt = 0;
+    <span class="keyword">end</span>
+
+    current_time = repmat((now - t0)*10e4,1,1);
+
+    x=sym(accFilt);
+
+    <span class="comment">% Integration from acceleration to velocity to displacement</span>
+    current_velocity = previous_velocity + int(x, previous_time, current_time);
+
+    <span class="comment">% low pass filter to filter out noise from calculated velocity</span>
+    velFilt = (1-gamma)*velFilt + gamma*current_velocity;
+
+    <span class="comment">% double integration from accelerometer to displacement</span>
+    displacement = int(previous_velocity + int(x, previous_time, current_time), previous_time, current_time);
+
+    total_displacement = total_displacement + displacement;
+    previous_velocity = velFilt;
+
+    previous_time = current_time;
+    title([<span class="string">'Distance Travelled: '</span> char(vpa(total_displacement,3)) <span class="string">'m'</span>]);
+    drawnow;
+
+    <span class="comment">% Pause for one time interval.</span>
+    pause(1/frequency);
+
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% EstimateDistanceIntegration.m demo example.
+%
+% This example uses the accelerometer to estimate distance travelled. 
+% Function returns acceleration in [x,y,z] directions. Unit is [G=10m/s^2] 
+% We only use x-axis on the accelerometer for calculation. Make sure
+% that the Engduino device is placed with the LEDs facing downwards. Upload
+% the code, position the accelerometer, press the button to start and press the
+% button to stop the calculation immediately.
+%
+% July 2015, Engduino team: support@engduino.org
+ 
+%% Initialize variables
+% Check if the Engduino object already exists. Otherwise initialize it.
+if (~exist('e', 'var'))
+    % Create Engduino object and open COM port. You do not need to select
+    % an active COM port, as it should be detected automatically. However,
+    % in the case of unsuccessful connection, you may initialize Engduino
+    % object with passing the active COM port. E.g. e = engduino('COM8');
+    % To open the 'Bluetooth' port you need to initialize the Engduino
+    % object with the 'Bluetooth' keyword and your Bluetooth device name.
+    % E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by
+    % initialize the Engduino object with 'demo' keyword. E.g. e =
+    % engduino('demo');
+    e = engduino();
+end
+
+% Set reading frequency [Hz] - readings per second.
+frequency = 100;
+
+% Set multiplier to convert accelerometer data to acceleration m/s^2
+multiplier = 26;
+
+% Set threshold to ignore small noise in acceleration
+acc_threshold = 0.5
+vel_threshold = 0.3;
+
+% Initialise variables for calculation
+previous_time =0;
+previous_velocity =0;
+total_displacement = 0;
+current_velocity = 0;
+
+% filter
+gxFilt = 0;
+accFilt =0;
+velFilt =0;
+
+% filter control coefficient
+alpha = 0.5;
+beta = 0.9;
+gamma = 0.9;
+
+current_time = repmat(now, 2, 4);
+t0 = now;
+
+pause(1);
+
+% Wait to start calculation
+while(not(e.getButton()))
+end
+
+%% Initialise accelerometer reading
+for i=1:10
+    newReading = e.getAccelerometer();
+    gx = newReading(1);
+    gy = newReading(2);
+    gz = newReading(3);
+    % high pass filter accelerometer output
+    gxFilt_filt = gx - ((1-alpha)*gxFilt + alpha*gx);
+end
+
+% accelerometer data is multiplied to get 1g=10m/s^2
+init_accx = (floor(gxFilt*100)*multiplier/100); 
+
+
+%% Main Program loop
+while (not(e.getButton()))
+    % Read acceleration vector from Engduino's accelerometer sensor.
+    newReading = e.getAccelerometer();
+    
+    gx = newReading(1);
+    gy = newReading(2);
+    gz = newReading(3);
+    
+    % high pass filter accelerometer output
+    gxFilt = gx - ((1-alpha)*gxFilt + alpha*gx);
+    
+    % subplot raw X acceleration vector
+    subplot(1,2,1)
+    % clear the current axis
+    cla;
+    line([0 gx], [0 0], 'color','r','LineWidth',2,'Marker','o');
+    % limit plot to +/- 1.25g in all directions and make axis square
+    limits = 2.5;
+    axis([-limits limits -limits limits]);
+    axis square;
+    grid on
+    xlabel('X-axis acceleration (raw)')
+    
+    % calculate the angle of the resultant acceleration vactor and print
+    theta = atand(gy/gx);
+    
+    % subplot filtered X acceleration vector
+    subplot(1,2,2)
+    cla;
+    line([0 gxFilt], [0,0],'Color', 'r', 'LineWidth' , 2, 'Marker', 'o');
+    % limit plot to +/- 1.25g in all directions and make axis square
+    limits = 2.5;
+    axis([-limits limits -limits limits]);
+    axis square;
+    grid on
+    xlabel('X-axis acceleration (filtered)')
+    
+    
+    acceleration = (floor(gxFilt*100)*multiplier/100 - init_accx);
+    
+    accFilt = (1-beta)*accFilt + beta*acceleration;
+    % ignore small value acceleration due to noise
+    if(accFilt>-acc_threshold&&accFilt<acc_threshold)
+        accFilt = 0;
+    end
+    
+    current_time = repmat((now - t0)*10e4,1,1);
+    
+    x=sym(accFilt);
+    
+    % Integration from acceleration to velocity to displacement
+    current_velocity = previous_velocity + int(x, previous_time, current_time);
+    
+    % low pass filter to filter out noise from calculated velocity
+    velFilt = (1-gamma)*velFilt + gamma*current_velocity;
+
+    % double integration from accelerometer to displacement
+    displacement = int(previous_velocity + int(x, previous_time, current_time), previous_time, current_time);
+    
+    total_displacement = total_displacement + displacement;
+    previous_velocity = velFilt;
+    
+    previous_time = current_time;
+    title(['Distance Travelled: ' char(vpa(total_displacement,3)) 'm']);
+    drawnow;
+
+    % Pause for one time interval.
+    pause(1/frequency);
+    
+end
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,233 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>analogWrite</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-07-27"><meta name="DC.source" content="api_analogWrite.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>analogWrite</h1><!--introduction--><p>Writes an analog value (PWM wave) to a pin. Can be used to light a LED at varying brightnesses or drive a motor at various speeds. After a call to analogWrite(), the pin will generate a steady square wave of the specified duty cycle until the next call to analogWrite() (or a call to digitalRead() or digitalWrite() on the same pin). The frequency of the PWM signal is approximately 490 Hz. This function works on pins 3, 5, 6, 9, 10, 11 and 13. You do not need to call pinMode() to set the pin as an output before calling analogWrite(). The analogWrite function has nothing to do with the analog pins or the analogRead function.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">Examples</a></li><li><a href="#5">Input Arguments</a></li><li><a href="#6">Output Arguments</a></li></ul></div><h2>Syntax<a name="1"></a></h2><pre class="codeinput">e.analogWrite(pin,value);
+e.analogWrite(pin,value,width);
+</pre><h2>Description<a name="2"></a></h2><p>
+<head>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<table style="width: 100%" >
+  <tr>
+     <td id="#api"><a href="#one">e.analogWrite(pin,value);</a></td>
+     <td>set the output pin and duty-cycle</td>
+  </tr>
+  <tr>
+     <td id="#api"><a href="#two">e.analogWrite(pin,value,width);</a></td>
+     <td>set the output pin, duty-cycle, and duration</td>
+  </tr>
+</table>
+</p><h2>Examples<a name="3"></a></h2><p>
+<a name="one" id="title"><li><b>Set D13 duty-cycle on 123 unconditionally</b></li></a>
+</p><p>Connect to Engduino and set pin 13 with duty-cycle of 123</p><pre class="codeinput"><span class="comment">% Check if the Engduino object already exists. Otherwise initialize it.</span>
+<span class="keyword">if</span> (~exist(<span class="string">'e'</span>, <span class="string">'var'</span>))
+        e = engduino();
+<span class="keyword">end</span>
+<span class="keyword">while</span> (true)
+    <span class="comment">% set pin 13 with 123 duty-cycle</span>
+    e.analogWrite(13, 123);
+<span class="keyword">end</span>
+</pre><p>
+<a name="two" id="title"><li><b>Set D6# duty-cycle on 75 for a 0.5 second</b></li></a>
+</p><p>Connect to Engduino, set D6# duty-cycle on 75 for a 0.5 second. After that the duty-cycle will be autoatiacly reset to zero, which will turn off that pin:</p><pre class="codeinput"><span class="comment">% Check if the Engduino object already exists. Otherwise initialize it.</span>
+<span class="keyword">if</span> (~exist(<span class="string">'e'</span>, <span class="string">'var'</span>))
+        e = engduino();
+<span class="keyword">end</span>
+
+<span class="keyword">while</span> (true)
+    e.analogWrite(6, 75, 0.5);
+<span class="keyword">end</span>
+</pre><h2>Input Arguments<a name="5"></a></h2><p>
+<table style="width: 100%" >
+  <tr>
+     <td id="api">pin</td>
+     <td>Pin number</td>
+  </tr>
+  <tr>
+     <td id="api">value</td>
+     <td>The duty cycle: between 0 (always off) and 255 (always on)</td>
+  </tr>
+  <tr>
+     <td id="api">width</td>
+     <td>Pulse width in seconds (optional)</td>
+  </tr>
+</table>
+</p><h2>Output Arguments<a name="6"></a></h2><p>
+<table style="width: 100%" >
+  <tr>
+     <td style="width:30%">res</td>
+     <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td>
+  </tr>
+</table>
+</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% analogWrite
+% Writes an analog value (PWM wave) to a pin. Can be used to
+% light a LED at varying brightnesses or drive a motor at
+% various speeds. After a call to analogWrite(), the pin will
+% generate a steady square wave of the specified duty cycle
+% until the next call to analogWrite() (or a call to
+% digitalRead() or digitalWrite() on the same pin). The
+% frequency of the PWM signal is approximately 490 Hz. This
+% function works on pins 3, 5, 6, 9, 10, 11 and 13. You do not
+% need to call pinMode() to set the pin as an output before
+% calling analogWrite(). The analogWrite function has nothing
+% to do with the analog pins or the analogRead function.
+%
+%% Syntax
+e.analogWrite(pin,value);
+e.analogWrite(pin,value,width);
+%% Description
+% <html>
+% <head>
+% <link rel="stylesheet" href="css/style.css">
+% </head>
+% <table style="width: 100%" >
+%   <tr>
+%      <td id="#api"><a href="#one">e.analogWrite(pin,value);</a></td>
+%      <td>set the output pin and duty-cycle</td> 
+%   </tr>
+%   <tr>
+%      <td id="#api"><a href="#two">e.analogWrite(pin,value,width);</a></td>
+%      <td>set the output pin, duty-cycle, and duration</td> 
+%   </tr>
+% </table>
+% </html>
+% 
+%% Examples
+%
+% <html>
+% <a name="one" id="title"><li><b>Set D13 duty-cycle on 123 unconditionally</b></li></a>
+% </html>
+%
+% Connect to Engduino and set pin 13 with duty-cycle of 123
+
+% Check if the Engduino object already exists. Otherwise initialize it.
+if (~exist('e', 'var'))
+        e = engduino();
+end
+while (true)
+    % set pin 13 with 123 duty-cycle
+    e.analogWrite(13, 123);
+end
+
+%%
+%
+% <html>
+% <a name="two" id="title"><li><b>Set D6# duty-cycle on 75 for a 0.5 second</b></li></a>
+% </html>
+%
+% Connect to Engduino, set D6# duty-cycle on 75 for a 0.5 second. After that the
+% duty-cycle will be autoatiacly reset to zero, which will turn
+% off that pin:
+
+% Check if the Engduino object already exists. Otherwise initialize it.
+if (~exist('e', 'var'))
+        e = engduino();
+end
+
+while (true)
+    e.analogWrite(6, 75, 0.5);
+end
+             
+%% Input Arguments
+%
+% <html>
+% <table style="width: 100%" >
+%   <tr>
+%      <td id="api">pin</td>
+%      <td>Pin number</td> 
+%   </tr>
+%   <tr>
+%      <td id="api">value</td>
+%      <td>The duty cycle: between 0 (always off) and 255 (always on)</td> 
+%   </tr>
+%   <tr>
+%      <td id="api">width</td>
+%      <td>Pulse width in seconds (optional)</td> 
+%   </tr>
+% </table>
+% </html>
+% 
+%% Output Arguments
+% 
+% <html>
+% <table style="width: 100%" >
+%   <tr>
+%      <td style="width:30%">res</td>
+%      <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td> 
+%   </tr>
+% </table>
+% </html>
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
