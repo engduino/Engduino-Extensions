@@ -21,7 +21,7 @@ if (~exist('e', 'var'))
     % E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by
     % initialize the Engduino object with 'demo' keyword. E.g. e =
     % engduino('demo');
-    e = engduino();
+    e = engduino('COM10');
 end
 
 % Set reading frequency [Hz] - readings per second.

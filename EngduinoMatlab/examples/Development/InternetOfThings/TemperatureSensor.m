@@ -8,8 +8,9 @@
  
 %% Initialize variables
 
+% ChId of the channel
 writeChId = 54313;
-
+% WriteKey of the channel
 writeKey = 'A40IJ3Q0H3PL3IJG';
 
 
@@ -111,8 +112,9 @@ while ExitCondition(circBuff, e, true)
     
     update_counter = update_counter +1;
     
-    % update to thingspeak every 15s
+    % update to thingspeak every 15s max
     if update_counter>75
+        % channelID,data, fields eg.[1,2,3]
         thingSpeakWrite(writeChId, [newest], 'Fields',[1],'TimeStamps',t,'Writekey',writeKey);
         update_counter = 0;
     end

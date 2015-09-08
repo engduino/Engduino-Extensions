@@ -76,7 +76,7 @@ axis('equal');
 % Turn off the background box
 axis(handles.axes1,'off');
 axis(handles.axes3,'off');
-axis(handles.axes4,'off');
+axis(handles.axes16,'off');
 % Turn off axis
 setBgColour(get(handles.cat1,'BackgroundColor'));
 % update GUI data
@@ -279,11 +279,12 @@ handles.output = hObject;
 guidata(hObject, handles);
 set(gca,'visible','off');
 init(hObject);
-axes(handles.axes4);
+axes(handles.axes16);
 k = imread('heart.png');
-axes(handles.heartZoneChart);
-k = imread('heartratew.jpg');
 imshow(k);
+axes(handles.heartZoneChart);
+j = imread('heartratew.jpg');
+imshow(j);
 
 % UIWAIT makes PulseSensorExample wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
