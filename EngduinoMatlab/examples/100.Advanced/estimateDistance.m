@@ -51,6 +51,10 @@ time = repmat(now, 2, 4);
 t0 = now;
 
 pause(1);
+% Wait to start calculation
+while(not(e.getButton()))
+    pause(0.1);
+end
 % initialise accelerometer reading
 for i=1:10
 newReading = e.getAccelerometer();

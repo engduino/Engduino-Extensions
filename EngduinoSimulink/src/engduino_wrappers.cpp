@@ -158,6 +158,26 @@ extern "C" uint8_t read_data_serial_wrapper() {
     }
 }
 
+extern "C" uint8_t read_data_BT_wrapper() {
+	static uint8_t init = 0;
+	if (init == 0) {
+		Serial.begin(9600);
+		init = 1;
+	}
+    
+    uint8_t tmp;
+    uint8_t j;
+    if(Serial.available())
+    {
+        tmp = Serial.read();
+        //j = ((tmp+32)*4)/4;
+        return tmp;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 
 // extern "C" void sd_write_wrapper(double data) {
