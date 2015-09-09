@@ -21,7 +21,7 @@ if (~exist('e', 'var'))
     % E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by
     % initialize the Engduino object with 'demo' keyword. E.g. e =
     % engduino('demo');
-    e = engduino('COM10');
+    e = engduino('COM4');
 end
 % Set reading frequency [Hz] - readings per second.
 frequency = 100;
@@ -34,6 +34,7 @@ acc_threshold = 0.5
 vel_threshold = 0.3;
 previous_time =0;
 previous_velocity =0;
+displacement = 0;
 total_displacement = 0;
 current_velocity = 0;
 
@@ -47,6 +48,7 @@ alpha = 0.5;
 beta = 0.9;
 gamma = 0.9;
 
+% initialise the time
 time = repmat(now, 2, 4);
 t0 = now;
 
@@ -55,6 +57,8 @@ pause(1);
 while(not(e.getButton()))
     pause(0.1);
 end
+
+pause(0.5);
 % initialise accelerometer reading
 for i=1:10
 newReading = e.getAccelerometer();
@@ -92,9 +96,6 @@ while (not(e.getButton()))
     grid on
     xlabel('X-axis acceleration (raw)')
     
-    % calculate the angle of the resultant acceleration vactor and print
-    theta = atand(gy/gx);
-    
     % subplot filtered X acceleration vector
     subplot(1,2,2)
     cla;
@@ -105,7 +106,6 @@ while (not(e.getButton()))
     axis square;
     grid on
     xlabel('X-axis acceleration (filtered)')
-    
     
     acceleration = (floor(gxFilt*100)*multiplier/100 - init_accx);
     
