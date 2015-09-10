@@ -1,6 +1,6 @@
-%% accKeyboardControl.m demo example.
-%
-% This example shows how to use Accelerometer on the Engduino as a game controller. 
+  %                             % accKeyboardControl.m demo example.
+%   
+% T    his example shows how to use Accelerometer on the Engduino as a game controller. 
 % The accelerometer data is calculated and mapped to simulate keypress on
 % the keyboard with the use of external Java library for the key mapping.
 %

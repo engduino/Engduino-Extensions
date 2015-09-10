@@ -30,9 +30,15 @@ frequency = 100;
 % Set multiplier to convert accelerometer data to acceleration m/s^2
 multiplier = 26;
 
-% Set threshold to ignore small noise in acceleration and velocity
+% Set threshold to ignore small noise in acceleration
 acc_threshold = 0.5
 vel_threshold = 0.3;
+
+% Initialise variables for calculation
+previous_time =0;
+previous_velocity =0;
+total_displacement = 0;
+current_velocity = 0;
 
 % filter
 gxFilt = 0;
@@ -43,12 +49,6 @@ velFilt =0;
 alpha = 0.5;
 beta = 0.9;
 gamma = 0.9;
-
-% Initialise variables for calculation
-previous_time =0;
-previous_velocity =0;
-total_displacement = 0;
-current_velocity = 0;
 
 current_time = repmat(now, 2, 4);
 t0 = now;
@@ -74,6 +74,48 @@ end
 init_accx = (floor(gxFilt*100)*multiplier/100); 
 
 
+% Set circle buffer length [samples].
+buffSize = 100;
+
+% Plot range [G].
+plotRange = 2;
+ 
+i = 1;
+circBuff = nan(2, 4);
+time = repmat(now, 2, 4);
+t0 = now;
+ 
+%% Set up the figure. 
+figureHandle = figure('NumberTitle', 'off',...
+                      'Name', 'Velocity over Time', ...
+                      'Visible', 'off');
+ 
+% Set axes.
+axesHandle = axes('Parent', figureHandle, 'YGrid', 'on', 'XGrid', 'on');
+ 
+ 
+hold on;
+plotHandle = plot(axesHandle, time, circBuff,'Marker', 'o', ....
+                                             'MarkerSize', 5, ...
+                                             'LineWidth', 2);
+% Create xlabel.
+xlabel('Time [s]', 'FontSize', 12);
+ 
+% Create ylabel.
+ylabel('Velocity (m/s)', 'FontSize', 12);
+ 
+% Create title.
+title('Velocity over Time', 'FontSize', 14);
+ 
+% Create legend.
+legend({'Velocity'})
+ 
+%% Real-time plot.
+set(figureHandle, 'Visible', 'on');
+
+
+
+
 %% Main Program loop
 while (not(e.getButton()))
     % Read acceleration vector from Engduino's accelerometer sensor.
@@ -85,33 +127,6 @@ while (not(e.getButton()))
     
     % high pass filter accelerometer output
     gxFilt = gx - ((1-alpha)*gxFilt + alpha*gx);
-    
-    % subplot raw X acceleration vector
-    subplot(1,2,1)
-    % clear the current axis
-    cla;
-    line([0 gx], [0 0], 'color','r','LineWidth',2,'Marker','o');
-    % limit plot to +/- 1.25g in all directions and make axis square
-    limits = 2.5;
-    axis([-limits limits -limits limits]);
-    axis square;
-    grid on
-    xlabel('X-axis acceleration (raw)')
-    
-    % calculate the angle of the resultant acceleration vactor and print
-    theta = atand(gy/gx);
-    
-    % subplot filtered X acceleration vector
-    subplot(1,2,2)
-    cla;
-    line([0 gxFilt], [0,0],'Color', 'r', 'LineWidth' , 2, 'Marker', 'o');
-    % limit plot to +/- 1.25g in all directions and make axis square
-    limits = 2.5;
-    axis([-limits limits -limits limits]);
-    axis square;
-    grid on
-    xlabel('X-axis acceleration (filtered)')
-    
     
     acceleration = (floor(gxFilt*100)*multiplier/100 - init_accx);
     
@@ -138,10 +153,28 @@ while (not(e.getButton()))
     previous_velocity = velFilt;
     
     previous_time = current_time;
-    title(['Distance Travelled: ' char(vpa(total_displacement,3)) 'm']);
-    drawnow;
 
+    if i < buffSize
+        % Add the newest sample into the buffer.
+        circBuff(i, :) = current_velocity;
+        time(i, :) = repmat((now - t0)*10e4, 1, 4);
+    else
+        % If we have enough samples then remove oldest sample and add the
+        % newest one into the buffer.
+        circBuff = [circBuff(2:end, :); current_velocity];
+        time = [time(2:end, :); repmat((now - t0)*10e4, 1, 4)];
+    end
+    
+    % Set xlim and ylim for Plot.
+    xlim(axesHandle, [min(time(:,1)) max(time(:,1))+10e-9]);
+    ylim(axesHandle, [-plotRange, plotRange]);
+    
+    % Plot data.
+    for j=1:4
+        set(plotHandle(j), 'YData', circBuff(:, j), 'XData', time(:, j), 'Color','blue');
+    end
     % Pause for one time interval.
     pause(1/frequency);
-    
+    % Increment counter.
+    i = i + 1;
 end
