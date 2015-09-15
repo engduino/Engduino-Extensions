@@ -42,7 +42,7 @@ writeKey = 'A40IJ3Q0H3PL3IJG';
 
 
 % Create a serial port object.
-obj1 = instrfind('Type', 'serial', 'Port', 'COM3', 'Tag', '');
+obj1 = instrfind('Type', 'serial', 'Port', 'COM4', 'Tag', '');
 
 % Create the serial port object if it does not exist
 % otherwise use the object that was found.
@@ -59,18 +59,25 @@ k=0;
 update_counter = 0;
 while(k==0)
 % Communicating with instrument object, obj1.
-data1 = query(obj1, '*IDN?');
-disp(data1);
-update_counter = update_counter +1;
-c = clock;
+try
+    data1 = query(obj1, '*IDN?');
+    disp(data1);
+    update_counter = update_counter +1;
+    c = clock;
     t = datetime(c(1),c(2),c(3),c(4),c(5),c(6));    
     % update to thingspeak every 15s max
-    if update_counter>40
+    if update_counter>400
         % channelID,data, fields eg.[1,2,3]
         thingSpeakWrite(writeChId, data1, 'Fields',[1],'TimeStamps',t,'Writekey',writeKey);
         update_counter = 0;
     end
-pause(0.5);
+    pause(0.1);
+catch
+    % Disconnect from instrument object, obj1.
+    fclose(obj1);
+    % Clean up all objects.
+    delete(obj1);
+end
 end
 % Disconnect from instrument object, obj1.
 fclose(obj1);
