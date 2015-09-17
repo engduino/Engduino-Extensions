@@ -76,6 +76,7 @@ while ExitCondition(circBuff, e, true)
         % Add the newest sample into the buffer.
         circBuff(i) = newest;
         time(i) = (now - t0)*10e4;
+        disp(time);
     else
         % If we have enough samples then remove oldest sample and add the
         % newest one into the buffer.

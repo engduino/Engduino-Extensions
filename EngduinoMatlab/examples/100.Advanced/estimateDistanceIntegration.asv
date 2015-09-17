@@ -54,7 +54,6 @@ current_time = repmat(now, 2, 4);
 %% For Graph plotting
 buffSize = 10;
 accelerometer_circBuff = nan;
-acceleration_circBuff = nan;
 time = now;
 t0 = now;
 i=1;
@@ -74,7 +73,7 @@ grid on
 
 % graph2
 subplot(graph(2));
-plotHandle2 = plot(graph(2),time,acceleration_circBuff,'Marker','o','MarkerSize',5,'LineWidth',2);
+plotHandle2 = plot(graph(2),time,accelerometer_circBuff,'Marker','o','MarkerSize',5,'LineWidth',2);
 xlabel('Time[s]');
 ylabel('Gravitational Force (g)');
 title(['Acceleration: ' char(vpa(acceleration_Filtered,3)) 'm/s^2']);
@@ -139,15 +138,14 @@ while (not(e.getButton()))
     if i < buffSize
         % Add the newest sample into the buffer.
         accelerometer_circBuff(i) = gx;
-        acceleration_circBuff(i) = xAcc_Filtered;
         time(i) = (now-t0)*10e4;
     else
         % If we have enough samples then remove oldest sample and add the
         % newest one into the buffer.
         accelerometer_circBuff = [accelerometer_circBuff(2:end), gx];
-        acceleration_circBuff= [acceleration_circBuff(2:end), xAcc_Filtered];
         time = [time(2:end), (now - t0)*10e4];
     end
+    disp(time);
     % subplot raw X acceleration vector
     subplot(graph(1));
     limits = 1.0;
@@ -156,13 +154,6 @@ while (not(e.getButton()))
     title(['Acceleration: ' char(vpa(acceleration_Filtered,3)) 'm/s^2']);
     set(plotHandle1,'YData',accelerometer_circBuff,'XData',time);
     
-    
-    subplot(graph(2));
-    limits = 1.0;
-    xlim([min(time) max(time)+10e-9]);
-    ylim([-limits limits]);
-    title(['Acceleration: ' char(vpa(acceleration_Filtered,3)) 'm/s^2']);
-    set(plotHandle2,'YData',acceleration_circBuff,'XData',time);
 %     % subplot filtered X acceleration vector
 %     subplot(1,2,2)
 %     cla;

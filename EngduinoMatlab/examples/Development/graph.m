@@ -21,7 +21,7 @@ if (~exist('e', 'var'))
     % E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by
     % initialize the Engduino object with 'demo' keyword. E.g. e =
     % engduino('demo');
-    e = engduino('COM4');
+    e = engduino('Bluetooth','HC-05');
 end
 
 % Set reading frequency [Hz] - readings per second.
@@ -168,7 +168,7 @@ while (not(e.getButton()))
     % Set xlim and ylim for Plot.
     xlim(axesHandle, [min(time(:,1)) max(time(:,1))+10e-9]);
     ylim(axesHandle, [-plotRange, plotRange]);
-    
+    disp(time);
     % Plot data.
     for j=1:4
         set(plotHandle(j), 'YData', circBuff(:, j), 'XData', time(:, j), 'Color','blue');
