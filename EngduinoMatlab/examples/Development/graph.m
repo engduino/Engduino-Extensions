@@ -60,6 +60,8 @@ while(not(e.getButton()))
     pause(0.1);
 end
 
+
+
 %% Initialise accelerometer reading
 for i=1:10
     newReading = e.getAccelerometer();

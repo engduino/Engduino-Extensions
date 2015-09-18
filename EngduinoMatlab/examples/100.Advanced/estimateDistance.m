@@ -21,7 +21,7 @@ if (~exist('e', 'var'))
     % E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by
     % initialize the Engduino object with 'demo' keyword. E.g. e =
     % engduino('demo');
-    e = engduino('COM4');
+    e = engduino('Bluetooth','HC-05');
 end
 % Set reading frequency [Hz] - readings per second.
 frequency = 100;
@@ -34,6 +34,7 @@ acc_threshold = 0.5;
 xAcc_Filtered = 0;
 acceleration_Filtered =0;
 velocity_Filtered =0;
+gx = 0;
 
 % coefficient to apply filtering
 alpha = 0.5;
@@ -41,7 +42,7 @@ beta = 0.9;
 gamma = 0.9;
 
 % initialise the time
-time = repmat(now, 2, 4);
+current_time = repmat(now, 2, 4);
 t0 = now;
 previous_time =0;
 
@@ -52,13 +53,43 @@ total_displacement = 0;
 current_velocity = 0;
 init =0;
 
-% Wait to start calculation
+%% For Graph plotting
+buffSize = 10;
+accelerometer_circBuff = nan;
+velocity_circBuff = nan;
+time = now;
+i=1;
+
+figure;
+% graph1
+graph(1) = subplot(1,2,1);
+plotHandle1 = plot(graph(1),time,accelerometer_circBuff,'Marker','o','MarkerSize',5,'LineWidth',2);
+xlabel('Time[s]');
+ylabel('Gravitational Force (g)');
+title(['RAW Acceleration: ' char(vpa(gx)) 'g']);
+limits = 1.0;
+ylim([-limits limits])
+axis square;
+grid on
+
+% graph2
+graph(2) = subplot(1,2,2);
+plotHandle2 = plot(graph(2),time,velocity_circBuff,'Marker','o','MarkerSize',5,'LineWidth',2);
+xlabel('Time[s]');
+ylabel('Velocity (m/s)');
+limits = 1.0;
+ylim([-limits limits]);
+title(['Displacement: ' char(vpa(total_displacement,3)) 'm']);
+axis square;
+grid on
+
+%% Wait to start calculation
 while(not(e.getButton()))
     pause(0.1);
 end
 
 pause(0.3);
-% initialise accelerometer reading
+%% initialise accelerometer reading
 for i=1:5
     newReading = e.getAccelerometer();
     gx = newReading(1);
@@ -90,28 +121,57 @@ while (not(e.getButton()))
     end
     
     % to get current time
-    time = repmat((now - t0)*10e4,1,1);
+    current_time = repmat((now - t0)*10e4,1,1);
     
     % dt = change in time
     if (init==0)
         dt=0;
         init=1;
     else
-        dt = (time - previous_time);
+        dt = (current_time - previous_time);
     end
     % Integration from acceleration to velocity to displacement
     current_velocity = previous_velocity + acceleration_Filtered*dt;
     
     % apply low pass filter to velocity result
     velocity_Filtered = (1-gamma)*velocity_Filtered + gamma*current_velocity;
-
+    
     displacement = previous_velocity*dt + 0.5*acceleration_Filtered*dt*dt;
     total_displacement = total_displacement + displacement;
     previous_velocity = velocity_Filtered;
     
-    previous_time = time;
-    title(['Distance Travelled: ' num2str(total_displacement, 3) 'm']);
-    drawnow;
+    previous_time = current_time;
+
+
+    
+    if i < buffSize
+        % Add the newest sample into the buffer.
+        accelerometer_circBuff(i) = gx;
+        velocity_circBuff(i) = velocity_Filtered;
+        time(i) = (now-t0)*10e4;
+    else
+        % If we have enough samples then remove oldest sample and add the
+        % newest one into the buffer.
+        accelerometer_circBuff = [accelerometer_circBuff(2:end), gx];
+        velocity_circBuff= [velocity_circBuff(2:end), velocity_Filtered];
+        time = [time(2:end), (now - t0)*10e4];
+    end
+    % subplot raw X acceleration vector
+    subplot(graph(1));
+    limits = 1.0;
+    xlim([min(time) max(time)+10e-9]);
+    ylim([-limits limits]);
+    title(['RAW Acceleration: ' char(vpa(gx)) 'g']);
+    set(plotHandle1,'YData',accelerometer_circBuff,'XData',time);
+    
+    subplot(graph(2));
+    limits = 1.0;
+    xlim([min(time) max(time)+10e-9]);
+    ylim([-limits limits]);
+    title(['Displacement: ' num2str(total_displacement, 3) 'm']);
+    set(plotHandle2,'YData',velocity_circBuff,'XData',time);
+    
+    i = i+1;
     % Pause for one time interval.
     pause(1/frequency);
 end
