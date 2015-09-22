@@ -22,7 +22,7 @@ function varargout = Measurement(varargin)
 
 % Edit the above text to modify the response to help Measurement
 
-% Last Modified by GUIDE v2.5 11-Sep-2015 17:43:34
+% Last Modified by GUIDE v2.5 22-Sep-2015 13:06:41
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -64,7 +64,7 @@ guidata(hObject, handles);
 % Make connection to Engduino
 function status = connect_board(hObject)
 handles = guidata(hObject);
-cons = @() engduino('Bluetooth','HC-05');
+cons = @() engduino('COM4');
 try
     if (isempty(handles.board))
         delete(handles.board);

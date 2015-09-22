@@ -66,7 +66,7 @@ graph(1) = subplot(1,2,1);
 plotHandle1 = plot(graph(1),time,accelerometer_circBuff,'Marker','o','MarkerSize',5,'LineWidth',2);
 xlabel('Time[s]');
 ylabel('Gravitational Force (g)');
-title(['RAW Acceleration: ' char(vpa(gx)) 'g']);
+title(['RAW Acceleration: ' char(vpa(gx)) 'g'], 'FontSize', 28);
 limits = 1.0;
 ylim([-limits limits])
 axis square;
@@ -79,7 +79,7 @@ xlabel('Time[s]');
 ylabel('Velocity (m/s)');
 limits = 1.0;
 ylim([-limits limits]);
-title(['Displacement: ' char(vpa(total_displacement,3)) 'm']);
+title(['Displacement: ' char(vpa(total_displacement,3)) 'm'],'FontSize', 28);
 axis square;
 grid on
 
@@ -161,14 +161,14 @@ while (not(e.getButton()))
     limits = 1.0;
     xlim([min(time) max(time)+10e-9]);
     ylim([-limits limits]);
-    title(['RAW Acceleration: ' char(vpa(gx)) 'g']);
+    title(['RAW Acceleration: ' char(vpa(gx)) 'g'], 'FontSize', 28);
     set(plotHandle1,'YData',accelerometer_circBuff,'XData',time);
     
     subplot(graph(2));
     limits = 1.0;
     xlim([min(time) max(time)+10e-9]);
     ylim([-limits limits]);
-    title(['Displacement: ' num2str(total_displacement, 3) 'm']);
+    title(['Displacement: ' num2str(total_displacement, 3) 'm'], 'FontSize', 28);
     set(plotHandle2,'YData',velocity_circBuff,'XData',time);
     
     i = i+1;

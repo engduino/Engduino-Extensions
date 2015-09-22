@@ -16,7 +16,7 @@ import java.awt.Robot;
 % Declare the java object
 robot = Robot;
 % Set reading frequency [Hz] - readings per second.
-frequency = 120 ;
+frequency = 150 ;
 % Set the left right steering sensitivity
 LRsensitivity = 30;
 % Set the up down steering sensitivity
@@ -26,6 +26,13 @@ UpDownSensitivity = 10;
 if (~exist('e', 'var'))
     e = engduino('Bluetooth', 'HC-05');
 end
+
+%% Wait to start calculation
+while(not(e.getButton()))
+    pause(0.1);
+end
+
+pause(0.3);
 
 % initialise starting accelerometer position
 newReading = e.getAccelerometer();
