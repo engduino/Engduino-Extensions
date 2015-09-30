@@ -7,27 +7,27 @@
 % <table style="width: 100%" >
 %   <h2>Read and Write Data</h2>
 %   <tr>
-%      <td id="api"><a href="api/api_analogRead.html">analogRead</a></td>
+%      <td id="api"><a href="api/analogRead.html">analogRead</a></td>
 %      <td>Reads the value from the specified analog pin</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_analogWrite.html">analogWrite</a></td>
+%      <td id="api"><a href="api/analogWrite.html">analogWrite</a></td>
 %      <td>Writes an analog value (PWM wave) to a pin</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_digitalRead.html">digitalRead</a></td>
+%      <td id="api"><a href="api/digitalRead.html">digitalRead</a></td>
 %      <td>Reads the value from the specified digital pin</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_digitalWrite.html">digitalWrite</a></td>
+%      <td id="api"><a href="api/digitalWrite.html">digitalWrite</a></td>
 %      <td>Write a HIGH or a LOW value to a digital pin</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_pinMode.html">pinMode</a></td>
+%      <td id="api"><a href="api/pinMode.html">pinMode</a></td>
 %      <td>Configures the specified pin to behave either as an input or an output</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_pinModeA.html">pinModeA</a></td>
+%      <td id="api"><a href="api/pinModeA.html">pinModeA</a></td>
 %      <td>Configures the specified pin to behave either as an input or an output</td> 
 %   </tr>
 % </table>

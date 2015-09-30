@@ -42,7 +42,7 @@ end
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">accReading</td>
+%      <td id="api">accReading</td>
 %      <td>Return a 1x3 Matrix that contains the xyz value of Engduino's accelerometer</td> 
 %   </tr>
 % </table>

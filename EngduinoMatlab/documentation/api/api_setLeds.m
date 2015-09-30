@@ -10,11 +10,11 @@ e.setLeds(vals);
 % </head>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:40%"><a href="#one">e.setLeds(vals[1-16])</a></td>
+%      <td id="api"><a href="#one">e.setLeds(vals[1-16])</a></td>
 %      <td>Set individual colours of all the 16 LEDs on Engduino</td> 
 %   </tr>
 %   <tr>
-%      <td style="width:40%"><a href="#two">int e.setLeds(vals[1-16])</a></td>
+%      <td id="api"><a href="#two">int e.setLeds(vals[1-16])</a></td>
 %      <td>Set individual colours of all the 16 LEDs on Engduino with return status</td> 
 %   </tr>
 % </table>
@@ -73,7 +73,7 @@ res = e.setLeds([1, 2, 3, 4, ...
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">vals[1-16]</td>
+%      <td id="api">vals[1-16]</td>
 %      <td> A 1x16 Matrix [color1,...,color16] with colour values
 % correspond to the Engduino LEDs </td> 
 %   </tr>
@@ -85,7 +85,7 @@ res = e.setLeds([1, 2, 3, 4, ...
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">res</td>
+%      <td id="api">res</td>
 %      <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td> 
 %   </tr>
 % </table>

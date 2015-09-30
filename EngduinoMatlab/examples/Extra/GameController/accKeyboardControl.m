@@ -1,10 +1,10 @@
-  %                             % accKeyboardControl.m demo example.
+%% accKeyboardControl.m demo example.
 %   
-% T    his example shows how to use Accelerometer on the Engduino as a game controller. 
+% This example shows how to use Accelerometer on the Engduino as a game controller. 
 % The accelerometer data is calculated and mapped to simulate keypress on
 % the keyboard with the use of external Java library for the key mapping.
 %
-% July 2015, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
 
 %% Import External Library
 % Import Java robot for keyboard control. 
@@ -59,41 +59,42 @@ while (1)
     upDownAxis = thetaUD - thetaUD_init;
 
     if(thetaLR<-LRsensitivity&&thetaUD<0)
-        %disp('Move left');
+        % Simulate keypress on left arrow key
         robot.keyPress(java.awt.event.KeyEvent.VK_LEFT); 
     elseif(thetaLR>LRsensitivity&&thetaUD<0)  
-        %disp('Move  right');
+        % Simulate keypress on right arrow key
         robot.keyPress(java.awt.event.KeyEvent.VK_RIGHT);
     elseif(thetaLR<-LRsensitivity&&thetaUD>=0)
         % inverse the control when up/down tilt angle >=0
-        %disp('Move right');
+        % Simulate keypress on right arrow key
         robot.keyPress(java.awt.event.KeyEvent.VK_RIGHT);
     elseif(thetaLR>LRsensitivity&&thetaUD>=0)
-        %disp('Move left');
+        % Simulate keypress on left arrow key
         robot.keyPress(java.awt.event.KeyEvent.VK_LEFT);
     else
-        
+        % Simulate release of the keypress 
         robot.keyRelease(java.awt.event.KeyEvent.VK_LEFT); 
         robot.keyRelease(java.awt.event.KeyEvent.VK_RIGHT); 
     end
     
     if(upDownAxis<-UpDownSensitivity)
-        %disp('Move down');
+        % Simulate keypress on down arrow key
         robot.keyPress(java.awt.event.KeyEvent.VK_DOWN); 
     elseif (upDownAxis>UpDownSensitivity)
-        %disp('Move up');
+        % Simulate keypress on up arrow key
         robot.keyPress(java.awt.event.KeyEvent.VK_UP); 
     else
+        % Simulate release of the keypress 
         robot.keyRelease(java.awt.event.KeyEvent.VK_UP); 
         robot.keyRelease(java.awt.event.KeyEvent.VK_DOWN); 
     end
     
     % Map the button on Engduino to a Key
     if (e.getButton())
-        %disp('Shooting');
+        % Simulate keypress on spacebar
         robot.keyPress(java.awt.event.KeyEvent.VK_SPACE);
     elseif (not(e.getButton()))
-        %disp('not Shooting');
+        % Simulate release of the keypress 
         robot.keyRelease(java.awt.event.KeyEvent.VK_SPACE );
     end
     

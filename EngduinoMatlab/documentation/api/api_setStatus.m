@@ -6,7 +6,7 @@ e.getStatus(parameters);
 %% Description
 % <html>
 % <head>
-% <link rel="stylesheet" href="css/style.css">
+% <link rel="stylesheet" href="../css/style.css">
 % </head>
 % <table style="width: 100%" >
 %   <tr>
@@ -43,7 +43,7 @@ e.setStatus([e.STATUS_OVERSAMPLING, 10]);
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">res</td>
+%      <td id="api">res</td>
 %      <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td> 
 %   </tr>
 % </table>

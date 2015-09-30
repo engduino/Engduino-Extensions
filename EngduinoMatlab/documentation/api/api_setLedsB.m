@@ -65,7 +65,7 @@ e.setLedsB([0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7],[1,1,2,3,4,5,6,7,8,9,10,11,12,13,14
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">res</td>
+%      <td id="api">res</td>
 %      <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td> 
 %   </tr>
 % </table>

@@ -1,0 +1,298 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>TemperatureSensorUploadThingSpeak.m demo example.</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-09-30"><meta name="DC.source" content="TemperatureSensorUploadThingSpeak.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>TemperatureSensorUploadThingSpeak.m demo example.</h1><!--introduction--><p>Description: This example shows how to get data from the Engduino Temperature sensor and upload it to ThingSpeak.com</p><p>July 2015, Mathworks &amp; Engduino team: <a href="mailto:support@engduino.org">support@engduino.org</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Initialize variables</a></li><li><a href="#2">Set up the figure.</a></li><li><a href="#3">Real-time plot</a></li><li><a href="#5">Update data to thingspeak every 15s max</a></li></ul></div><h2>Initialize variables<a name="1"></a></h2><pre class="codeinput"><span class="comment">% ChId of the channel</span>
+writeChId = 54313;
+<span class="comment">% WriteKey of the channel</span>
+writeKey = <span class="string">'A40IJ3Q0H3PL3IJG'</span>;
+
+
+<span class="comment">% Check if the Engduino object already exists. Otherwise initialize it.</span>
+<span class="keyword">if</span> (~exist(<span class="string">'e'</span>, <span class="string">'var'</span>))
+    <span class="comment">% Create Engduino object and open COM port. You do not need to select</span>
+    <span class="comment">% an active COM port, as it should be detected automatically. However,</span>
+    <span class="comment">% in the case of unsuccessful connection, you may initialize Engduino</span>
+    <span class="comment">% object with passing the active COM port. E.g. e = engduino('COM8');</span>
+    <span class="comment">% To open the 'Bluetooth' port you need to initialize the Engduino</span>
+    <span class="comment">% object with the 'Bluetooth' keyword and your Bluetooth device name.</span>
+    <span class="comment">% E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by</span>
+    <span class="comment">% initialize the Engduino object with 'demo' keyword. E.g. e =</span>
+    <span class="comment">% engduino('demo');</span>
+    e = engduino(<span class="string">'COM4'</span>);
+<span class="keyword">end</span>
+
+<span class="comment">% Set reading frequency [Hz] - readings per second.</span>
+frequency = 5;
+
+<span class="comment">% Set circle buffer length [samples]</span>
+buffSize = 100;
+
+i = 1;
+circBuff = nan;
+time = now;
+t0 = now;
+</pre><h2>Set up the figure.<a name="2"></a></h2><pre class="codeinput">figureHandle = figure(<span class="string">'NumberTitle'</span>, <span class="string">'off'</span>,<span class="keyword">...</span>
+                      <span class="string">'Name'</span>, <span class="string">'Engduino Temperature'</span>, <span class="keyword">...</span>
+                      <span class="string">'Visible'</span>, <span class="string">'off'</span>);
+
+<span class="comment">% Set axes.</span>
+axesHandle = axes(<span class="string">'Parent'</span>, figureHandle, <span class="string">'YGrid'</span>, <span class="string">'on'</span>, <span class="string">'XGrid'</span>, <span class="string">'on'</span>);
+
+
+hold <span class="string">on</span>;
+plotHandle = plot(axesHandle, time, circBuff,<span class="string">'Marker'</span>, <span class="string">'o'</span>, <span class="keyword">...</span><span class="comment">.</span>
+                                             <span class="string">'MarkerSize'</span>, 6, <span class="keyword">...</span>
+                                             <span class="string">'MarkerEdgeColor'</span>, [0.3 0.7 1], <span class="keyword">...</span>
+                                             <span class="string">'LineWidth'</span>, 2, <span class="keyword">...</span>
+                                             <span class="string">'Color'</span>, [0 0 1]);
+<span class="comment">% Create xlabel.</span>
+xlabel(<span class="string">'Time [s]'</span>, <span class="string">'FontSize'</span>, 12);
+
+<span class="comment">% Create ylabel.</span>
+ylabel(<span class="string">'Temperature [&deg;C]'</span>, <span class="string">'FontSize'</span>, 12);
+
+<span class="comment">% Create title.</span>
+title(<span class="string">'Engduino temperature sensor'</span>, <span class="string">'FontSize'</span>, 14);
+
+<span class="comment">% Create legend.</span>
+legend(<span class="string">'Temperature'</span>)
+</pre><h2>Real-time plot<a name="3"></a></h2><pre class="codeinput">set(figureHandle, <span class="string">'Visible'</span>, <span class="string">'on'</span>);
+
+<span class="comment">% Execute loop until exit condition is met.</span>
+disp(<span class="string">'You can terminate execution by:'</span>)
+disp(<span class="string">'- Press ''ESC'''</span>)
+disp(<span class="string">'- Press ''q'''</span>)
+disp(<span class="string">'- Press a button on the Engduino board'</span>)
+disp(<span class="string">'- Close the figure'</span>)
+
+update_counter = 0;
+
+<span class="keyword">while</span> ExitCondition(circBuff, e, true)
+</pre><pre class="codeinput">    <span class="comment">% Read temperature from Engduino's temperature sensor.</span>
+    newest = e.getTemperature();
+    <span class="keyword">if</span> i &lt; buffSize
+        <span class="comment">% Add the newest sample into the buffer.</span>
+        circBuff(i) = newest;
+        time(i) = (now - t0)*10e4;
+    <span class="keyword">else</span>
+        <span class="comment">% If we have enough samples then remove oldest sample and add the</span>
+        <span class="comment">% newest one into the buffer.</span>
+        circBuff = [circBuff(2:end), newest];
+        time = [time(2:end), (now - t0)*10e4];
+    <span class="keyword">end</span>
+
+    <span class="comment">% Set xlim and ylim for Plot.</span>
+    xlim(axesHandle, [min(time) max(time)+10e-9]);
+    ymin = min(circBuff);
+    ymax = max(circBuff)+10e-9;
+    span = (ymax - ymin)*0.1;
+    ylim(axesHandle, [ymin - span, ymax + span]);
+
+    <span class="comment">% Plot data.</span>
+    set(plotHandle, <span class="string">'YData'</span>, circBuff, <span class="string">'XData'</span>, time);
+
+    <span class="comment">% Pause for one time interval.</span>
+    pause(1/frequency);
+
+    <span class="comment">% Increment counter.</span>
+    i = i + 1;
+    c = clock;
+    t = datetime(c(1),c(2),c(3),c(4),c(5),c(6));
+
+    update_counter = update_counter +1;
+</pre><h2>Update data to thingspeak every 15s max<a name="5"></a></h2><pre class="codeinput">    <span class="keyword">if</span> update_counter&gt;75
+        <span class="comment">% channelID,data, fields eg.[1,2,3]</span>
+        thingSpeakWrite(writeChId, [newest], <span class="string">'Fields'</span>,[1],<span class="string">'TimeStamps'</span>,t,<span class="string">'Writekey'</span>,writeKey);
+        update_counter = 0;
+    <span class="keyword">end</span>
+</pre><pre class="codeinput"><span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% TemperatureSensorUploadThingSpeak.m demo example.
+%
+% Description:
+% This example shows how to get data from the Engduino Temperature sensor
+% and upload it to ThingSpeak.com
+%
+% July 2015, Mathworks & Engduino team: support@engduino.org
+ 
+%% Initialize variables
+
+% ChId of the channel
+writeChId = 54313;
+% WriteKey of the channel
+writeKey = 'A40IJ3Q0H3PL3IJG';
+
+
+% Check if the Engduino object already exists. Otherwise initialize it.
+if (~exist('e', 'var'))
+    % Create Engduino object and open COM port. You do not need to select
+    % an active COM port, as it should be detected automatically. However,
+    % in the case of unsuccessful connection, you may initialize Engduino
+    % object with passing the active COM port. E.g. e = engduino('COM8');
+    % To open the 'Bluetooth' port you need to initialize the Engduino
+    % object with the 'Bluetooth' keyword and your Bluetooth device name.
+    % E.g. e = engduino('Bluetooth', 'HC-05'); Demo mode can be enabled by
+    % initialize the Engduino object with 'demo' keyword. E.g. e =
+    % engduino('demo');
+    e = engduino('COM4');
+end
+
+% Set reading frequency [Hz] - readings per second.
+frequency = 5;
+ 
+% Set circle buffer length [samples]
+buffSize = 100;
+ 
+i = 1;
+circBuff = nan;
+time = now;
+t0 = now;
+ 
+%% Set up the figure. 
+figureHandle = figure('NumberTitle', 'off',...
+                      'Name', 'Engduino Temperature', ...
+                      'Visible', 'off');
+ 
+% Set axes.
+axesHandle = axes('Parent', figureHandle, 'YGrid', 'on', 'XGrid', 'on');
+ 
+ 
+hold on;
+plotHandle = plot(axesHandle, time, circBuff,'Marker', 'o', ....
+                                             'MarkerSize', 6, ...
+                                             'MarkerEdgeColor', [0.3 0.7 1], ...
+                                             'LineWidth', 2, ...
+                                             'Color', [0 0 1]);
+% Create xlabel.
+xlabel('Time [s]', 'FontSize', 12);
+ 
+% Create ylabel.
+ylabel('Temperature [°C]', 'FontSize', 12);
+ 
+% Create title.
+title('Engduino temperature sensor', 'FontSize', 14);
+ 
+% Create legend.
+legend('Temperature')
+ 
+%% Real-time plot
+set(figureHandle, 'Visible', 'on');
+ 
+% Execute loop until exit condition is met.
+disp('You can terminate execution by:')
+disp('- Press ''ESC''')
+disp('- Press ''q''')
+disp('- Press a button on the Engduino board')
+disp('- Close the figure')
+
+update_counter = 0;
+
+while ExitCondition(circBuff, e, true)
+    % Read temperature from Engduino's temperature sensor.
+    newest = e.getTemperature();
+    if i < buffSize
+        % Add the newest sample into the buffer.
+        circBuff(i) = newest;
+        time(i) = (now - t0)*10e4;
+    else
+        % If we have enough samples then remove oldest sample and add the
+        % newest one into the buffer.
+        circBuff = [circBuff(2:end), newest];
+        time = [time(2:end), (now - t0)*10e4];
+    end
+    
+    % Set xlim and ylim for Plot.
+    xlim(axesHandle, [min(time) max(time)+10e-9]);
+    ymin = min(circBuff);
+    ymax = max(circBuff)+10e-9;
+    span = (ymax - ymin)*0.1;
+    ylim(axesHandle, [ymin - span, ymax + span]);
+    
+    % Plot data.
+    set(plotHandle, 'YData', circBuff, 'XData', time);
+    
+    % Pause for one time interval.
+    pause(1/frequency);
+    
+    % Increment counter.
+    i = i + 1;
+    c = clock;
+    t = datetime(c(1),c(2),c(3),c(4),c(5),c(6));
+    
+    update_counter = update_counter +1;
+    
+    %% Update data to thingspeak every 15s max
+    if update_counter>75
+        % channelID,data, fields eg.[1,2,3]
+        thingSpeakWrite(writeChId, [newest], 'Fields',[1],'TimeStamps',t,'Writekey',writeKey);
+        update_counter = 0;
+    end
+end
+##### SOURCE END #####
+--></body></html>

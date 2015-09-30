@@ -19,4 +19,5 @@
 % * <Example/MagnetometerCalibration.html Magnetometer Calibration>
 % * <Example/pulse_sensor.html Working with External Pulse Sensor>
 % * <Example/estimateDistanceIntegration.html Estimate Distance with Accelerometer>
-%
+% * <Example/accKeyboardControl.html Use Accelerometer to control Keyboard with External Library>
+% * <Example/TemperatureSensorUploadThingSpeak.html Collect temperature data and upload to ThingSpeak>

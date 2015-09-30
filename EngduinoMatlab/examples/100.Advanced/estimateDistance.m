@@ -1,12 +1,15 @@
 %% EstimateDistance.m demo example.
 %
 % Description:
-% This example uses the accelerometer to estimate distance travelled. 
+% This example uses the accelerometer to estimate distance traveled. 
 % Function returns acceleration in [x,y,z] directions. Unit is [G=10m/s^2] 
-% This example only uses x-axis on accelerometer for calculation. Make sure
-% that the Engduino device is placed with the LEDs facing downwards.
-
-% July 2014, Engduino team: support@engduino.org
+% This example only uses x-axis on accelerometer for calculation. Upload
+% the code, position the Engduino with the LED facing downwards, press the 
+% button to start measuring, move the engduino along the straight you wish 
+% to measure, press the button again when you have reached the end of your 
+% measurement to stop measuring.
+%
+% July 2015, MathWorks & Engduino team: support@engduino.org
 
 %% Initialize variables
 
@@ -143,7 +146,7 @@ while (not(e.getButton()))
     previous_time = current_time;
 
 
-    
+    %% Real time graph plotting
     if i < buffSize
         % Add the newest sample into the buffer.
         accelerometer_circBuff(i) = gx;

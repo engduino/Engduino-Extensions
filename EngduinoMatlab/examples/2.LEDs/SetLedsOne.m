@@ -5,7 +5,7 @@
 % set the colour of one LED with value range [0-15], other LEDs remain
 % previous states
 %
-% July 2015, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
 
 %% Initialize variables
 

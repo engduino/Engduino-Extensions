@@ -2,14 +2,16 @@
 %
 % This example uses the accelerometer to estimate distance travelled. 
 % Function returns acceleration in [x,y,z] directions. Unit is [G=10m/s^2] 
-% We only use x-axis on the accelerometer for calculation. Make sure
-% that the Engduino device is placed with the LEDs facing downwards. Upload
-% the code, position the accelerometer, press the button to start and press the
-% button to stop the calculation immediately.
+% We only use x-axis on the accelerometer for calculation. Upload
+% the code, position the Engduino with the LED facing downwards, press the 
+% button to start measuring, move the engduino along the straight you wish 
+% to measure, press the button again when you have reached the end of your 
+% measurement to stop measuring.
 %
-% July 2015, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
  
 %% Initialize variables
+
 % Check if the Engduino object already exists. Otherwise initialize it.
 if (~exist('e', 'var'))
     % Create Engduino object and open COM port. You do not need to select
@@ -128,6 +130,7 @@ while (not(e.getButton()))
     previous_velocity = velocity_Filtered;
     previous_time = current_time;
     
+%% Real-time graph plotting
     if i < buffSize
         % Add the newest sample into the buffer.
         accelerometer_circBuff(i) = gx;

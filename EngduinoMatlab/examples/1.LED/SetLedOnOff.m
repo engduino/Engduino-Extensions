@@ -5,7 +5,7 @@
 % function call. The function requires first parameter as an integer
 % indication the position of LED and the second variable as the colour
 %
-% July 2014, Engduino team: support@engduino.org
+% July 2015, Mathworks & Engduino team: support@engduino.org
 
 %% Initialize variables
 

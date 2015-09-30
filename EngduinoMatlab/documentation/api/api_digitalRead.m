@@ -77,7 +77,7 @@ end
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">readings</td>
+%      <td id="api">readings</td>
 %      <td>A n x 2 array of requested pins state. eg. [pin_no,pin_value]</td> 
 %   </tr>
 % </table>

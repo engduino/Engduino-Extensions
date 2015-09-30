@@ -6,7 +6,7 @@
 % Engduino LED and another array of 16 variables each represent the
 % corresponding LED brightness
 %
-% July 2015, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
 
 %% Initialize variables
 

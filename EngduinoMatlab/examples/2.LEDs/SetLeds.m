@@ -5,7 +5,7 @@
 % input vector length 16, representing colour of each RGB LED on the
 % Engduino board.
 %
-% July 2014, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
 
 %% Initialize variables
 

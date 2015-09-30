@@ -29,11 +29,11 @@ e.digitalWrite(pin,value,width);
 % </head>
 % <table style="width: 100%" >
 %   <tr>
-%      <td id="#api"><a href="#one">e.digitalWrite(pin,value);</a></td>
+%      <td id="api"><a href="#one">e.digitalWrite(pin,value);</a></td>
 %      <td>set the output pin to value HIGH or LOW</td> 
 %   </tr>
 %   <tr>
-%      <td id="#api"><a href="#two">e.digitalWrite(pin,value,width);</a></td>
+%      <td id="api"><a href="#two">e.digitalWrite(pin,value,width);</a></td>
 %      <td>set the output pin to value HIGH or LOW for specific duration then negate its state</td> 
 %   </tr>
 % </table>
@@ -97,7 +97,7 @@ e.digitalWrite(13,e.PIN_VALUE_HIGH,1.5);
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">res</td>
+%      <td id="api">res</td>
 %      <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td> 
 %   </tr>
 % </table>

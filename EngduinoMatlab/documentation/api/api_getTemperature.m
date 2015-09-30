@@ -42,7 +42,7 @@ end
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">tempCelcius</td>
+%      <td id="api">tempCelcius</td>
 %      <td>Return (float)value of temperature in celcius</td> 
 %   </tr>
 % </table>

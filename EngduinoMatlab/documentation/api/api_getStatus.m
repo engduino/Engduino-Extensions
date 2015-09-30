@@ -43,7 +43,7 @@ res = e.getStatus(e.STATUS_OVERSAMPLING)
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">res</td>
+%      <td id="api">res</td>
 %      <td>res = [KEY1, VALUE1; KEY2, VALUE2; ... ; KEYn, VALUEn]</td> 
 %   </tr>
 % </table>

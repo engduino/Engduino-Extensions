@@ -30,9 +30,10 @@ timeInterval = 0.1;
 count = 0;
 
 while (1)
-  
+    try
         reading = fscanf(serialObject);  %#ok<SAGROW>
         
+        %disp(reading);
         % split the string by cr+lf, it returns the value and a ''
         strSplitted = strsplit(reading,{'\r\n'},'DelimiterType','RegularExpression');
         % convert the value to double
@@ -48,9 +49,14 @@ while (1)
             count = 0;
         end
         pause(timeInterval);
-        
+        disp(count);
         count = count +1;
-    
+    catch
+    % Disconnect from instrument object, obj1.
+    fclose(serialObject);
+    % Clean up all objects.
+    delete(serialObject);
+    end
 end
 
 %% Put the instrument in local mode

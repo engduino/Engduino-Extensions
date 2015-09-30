@@ -50,7 +50,7 @@ end
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">status</td>
+%      <td id="api">status</td>
 %      <td>Return button state. 1 - is pressed, 0 - otherwise</td> 
 %   </tr>
 % </table>

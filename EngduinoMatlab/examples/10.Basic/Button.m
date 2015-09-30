@@ -6,7 +6,7 @@
 %
 % Push the button to turn on the small green LED on the Engduino
 %
-% June 2015, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
  
 %% Initialize variables
 

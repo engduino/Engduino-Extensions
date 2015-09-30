@@ -5,7 +5,7 @@
 % input vector length 16, representing colour of each RGB LED on the
 % Engduino board.
 %
-% July 2014, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
  
 % Check if the Engduino object already exists. Otherwise initialize it.
 if (~exist('e', 'var'))

@@ -12,16 +12,7 @@
 % to Java website for more information on this class
 import java.awt.Robot;
 
-% Clear all variables and objects 
-clear all; close all;
-addpath(genpath('../../core'))
-% Create Engduino object and open COM port. You need to select active COM 
-% port on which the Engduino is connected. E.g. COM47. 
-% To open 'Bluetooth' port change initialization as suggested in Initial.m 
-% E.g. e = engduino('Bluetooth', 'your_device_name');
-% Set "port = demo" to enable demo run.
-port = 'demo';
-port = 'COM3';
+
 
 robot = Robot;
 
@@ -31,6 +22,17 @@ e = engduino(port);
 % Set reading frequency [Hz] - readings per second.
 frequency = 100 ;
  
+% Check if the Engduino object already exists. Otherwise initialize it.
+if (~exist('e', 'var'))
+    e = engduino('Bluetooth', 'HC-05');
+end
+
+%% Wait to start calculation
+while(not(e.getButton()))
+    pause(0.1);
+end
+
+pause(0.3);
 
 % initialise starting accelerometer position
 newReading = e.getAccelerometer();

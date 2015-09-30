@@ -42,7 +42,7 @@ end
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">magReading</td>
+%      <td id="api">magReading</td>
 %      <td>Return a 1x3 Matrix that contains the xyz value of Engduino's magnetometer</td> 
 %   </tr>
 % </table>

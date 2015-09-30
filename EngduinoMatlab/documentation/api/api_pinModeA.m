@@ -15,7 +15,7 @@ e.pinModeA(pin, configuration);
 % </head>
 % <table style="width: 100%" >
 %   <tr>
-%      <td id="#api"><a href="#one">e.pinModeA(pin, configuration);</a></td>
+%      <td id="api"><a href="#one">e.pinModeA(pin, configuration);</a></td>
 %      <td>set the analog pin as input or output</td> 
 %   </tr>
 % </table>
@@ -57,7 +57,7 @@ e.pinModeA(13, e.PIN_TYPE_OUTPUT);
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">res</td>
+%      <td id="api">res</td>
 %      <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td> 
 %   </tr>
 % </table>

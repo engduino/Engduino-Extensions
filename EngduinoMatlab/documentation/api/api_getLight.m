@@ -42,7 +42,7 @@ end
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">light_intensity</td>
+%      <td id="api">light_intensity</td>
 %      <td>Return (int)value of the light intensity measured</td> 
 %   </tr>
 % </table>

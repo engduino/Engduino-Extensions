@@ -4,7 +4,7 @@
 % This example shows Engduino 'analogRead' function call. Function returns
 % values of the analog pin.
 %
-% June 2015, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
  
 %% Initialize variables
 

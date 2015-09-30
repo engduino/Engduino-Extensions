@@ -17,11 +17,11 @@ readings = e.analogRead(pins);
 % </head>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:40%"><a href="#one">e.analogRead(pin);</a></td>
+%      <td id="api"><a href="#one">e.analogRead(pin);</a></td>
 %      <td>Reads the value from the specified analog pin.</td> 
 %   </tr>
 %   <tr>
-%      <td style="width:40%"><a href="#two">e.analogRead(pin1;pin2l..pinN);</a></td>
+%      <td id="api"><a href="#two">e.analogRead(pin1;pin2l..pinN);</a></td>
 %      <td>Reads the value from multiple analog pin. Function returns a Nx2 matrix with column one specify the pin number and column 2 returns the respective pin's analog value</td> 
 %   </tr>
 % </table>
@@ -70,7 +70,7 @@ end
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">pins</td>
+%      <td id="api">pins</td>
 %      <td>Input parameter can be scalars or vectors enabling setting
 %          multiple pins at once. </td> 
 %   </tr>
@@ -82,7 +82,7 @@ end
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">readings</td>
+%      <td id="api">readings</td>
 %      <td>A n x 2 array of requested pins state. eg. [pin_no,pin_value]</td> 
 %   </tr>
 % </table>

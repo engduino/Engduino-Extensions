@@ -14,19 +14,19 @@ e = engduino('Bluetooth',device_name)
 % </head>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:40%"><a href="#one">e = engduino()</a></td>
+%      <td id="api"><a href="#one">e = engduino()</a></td>
 %      <td>Automatically search through the available COM ports and try to connect on one</td> 
 %   </tr>
 %   <tr>
-%      <td style="width:40%"><a href="#two">e = engduino(port)</a></td>
+%      <td id="api"><a href="#two">e = engduino(port)</a></td>
 %      <td>Creates a connection to Engduino hardware on the specified port with the default 9600 baudrate</td> 
 %   </tr>
 %   <tr>
-%      <td style="width:40%"><a href="#three">e = engduino(port,baudrate)</a></td>
+%      <td id="api"><a href="#three">e = engduino(port,baudrate)</a></td>
 %      <td>Creates a connection to Engduino hardware on the specified port with the specified baudrate</td> 
 %   </tr>
 %   <tr>
-%      <td style="width:40%"><a href="#four">e = engduino('Bluetooth',device_name)</a></td>
+%      <td id="api"><a href="#four">e = engduino('Bluetooth',device_name)</a></td>
 %      <td>Creates a bluetooth communication to Engduino hardware on the specified device. (Additional bluetooth module is required)</td> 
 %   </tr>
 % </table>
@@ -76,15 +76,15 @@ e = engduino('Bluetooth','HC-05');
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">port</td>
+%      <td id="api">port</td>
 %      <td>(String) Hardware port</td> 
 %   </tr>
 %   <tr>
-%      <td style="width:30%">baudrate</td>
+%      <td id="api">baudrate</td>
 %      <td>(Integer) Serial communication speed</td> 
 %   </tr>
 %   <tr>
-%      <td style="width:30%">device_name</td>
+%      <td id="api">device_name</td>
 %      <td>(String) Name of the bluetooth module</td> 
 %   </tr>
 % </table>
@@ -95,7 +95,7 @@ e = engduino('Bluetooth','HC-05');
 % <html>
 % <table style="width: 100%" >
 %   <tr>
-%      <td style="width:30%">e</td>
+%      <td id="api">e</td>
 %      <td>(Object) Communition with Engduino returned as an object</td> 
 %   </tr>
 % </table>

@@ -7,31 +7,31 @@
 % <table style="width: 100%" >
 %   <h2>Engduino LEDs</h2>
 %   <tr>
-%      <td id="api"><a href="api/api_setLed.html">setLed</a></td>
+%      <td id="api"><a href="api/setLed.html">setLed</a></td>
 %      <td>Turn on/off the small green LED on Engduino</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_setLeds.html">setLeds</a></td>
+%      <td id="api"><a href="api/setLeds.html">setLeds</a></td>
 %      <td>set individual colours of all the 16 LEDs on Engduino</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_setLedsAll.html">setLedsAll</a></td>
+%      <td id="api"><a href="api/setLedsAll.html">setLedsAll</a></td>
 %      <td>set one colour for all the 16 LEDs on Engduino</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_setLedsExact.html">setLedsExact</a></td>
+%      <td id="api"><a href="api/setLedsExact.html">setLedsExact</a></td>
 %      <td>set the colour for one of the 16 LEDs on Engduino, other LEDs will be turned off</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_setLedsOne.html">setLedsOne</a></td>
+%      <td id="api"><a href="api/setLedsOne.html">setLedsOne</a></td>
 %      <td>set the colour for one of the 16 LEDs on Engduino, other LEDs will remain in previous state</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_setLedsB.html">setLedsB</a></td>
+%      <td id="api"><a href="api/setLedsB.html">setLedsB</a></td>
 %      <td>set individual colours and brightness for all 16 LEDs on Engduino</td> 
 %   </tr>
 %   <tr>
-%      <td id="api"><a href="api/api_setLedsAllB.html">setLedsAllB</a></td>
+%      <td id="api"><a href="api/setLedsAllB.html">setLedsAllB</a></td>
 %      <td>set the colour and brightness of all 16 LEDs on Engduino</td> 
 %   </tr>
 % </table>

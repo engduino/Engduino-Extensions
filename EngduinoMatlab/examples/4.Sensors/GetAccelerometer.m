@@ -6,7 +6,6 @@
 %
 % July 2014, Engduino team: support@engduino.org
  
-
 %% Initialize variables
 
 % Check if the Engduino object already exists. Otherwise initialize it.

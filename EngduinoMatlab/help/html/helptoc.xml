@@ -56,11 +56,13 @@
             <tocitem target="advanced_examples.html">Advanced Examples
                 <tocitem target="Example/MagnetometerCalibration.html">Magnetometer Calibration
                 </tocitem>
-                <tocitem target="mytbx_ch_3a.html">Working with External Pulse Sensor
+                <tocitem target="Example/PulseSensor.html">Working with External Pulse Sensor
                 </tocitem>
                 <tocitem target="Example/estimateDistanceIntegration.html">Integrate Acceleration to Displacement
                 </tocitem>
                 <tocitem target="Example/accKeyboardControl.html">Use Accelerometer to control Keyboard with External Library
+                </tocitem>
+                <tocitem target="Example/TemperatureSensorUploadThingSpeak.html">Collect temperature data and upload to ThingSpeak
                 </tocitem>
             </tocitem>
             
@@ -69,24 +71,24 @@
         <!-- First item is page describing function categories, if any -->
         <tocitem target="functions_reference.html" 
                  image="HelpIcon.FUNCTION">Function Reference
-            <tocitem target="api/api_engduino.html">engduino</tocitem>
+            <tocitem target="api/engduino.html">engduino</tocitem>
             <!-- First category, with link to anchor in above page -->
             <tocitem target="engduino_leds.html">Engduino LEDs
                 <!-- Inside category, list its functions alphabetically -->
-                <tocitem target="api/api_setLed.html">setLed</tocitem>
-                <tocitem target="api/api_setLeds.html">setLeds</tocitem>
-                <tocitem target="api/api_setLedsAll.html">setLedsAll</tocitem>
-                <tocitem target="api/api_setLedsExact.html">setLedsExact</tocitem>
-                <tocitem target="api/api_setLedsOne.html">setLedsOne</tocitem>
-                <tocitem target="api/api_setLedsB.html">setLedsB</tocitem>
-                <tocitem target="api/api_setLedsAllB.html">setLedsAllB</tocitem>
+                <tocitem target="api/setLed.html">setLed</tocitem>
+                <tocitem target="api/setLeds.html">setLeds</tocitem>
+                <tocitem target="api/setLedsAll.html">setLedsAll</tocitem>
+                <tocitem target="api/setLedsExact.html">setLedsExact</tocitem>
+                <tocitem target="api/setLedsOne.html">setLedsOne</tocitem>
+                <tocitem target="api/setLedsB.html">setLedsB</tocitem>
+                <tocitem target="api/setLedsAllB.html">setLedsAllB</tocitem>
 
                 <!-- ... -->
             </tocitem>
             <!-- Second category, with link to anchor in above page -->
             <tocitem target="engduino_button.html">Engduino Button
                 <!-- Inside category, list its functions alphabetically -->
-                <tocitem target="api/api_getButton.html">getButton</tocitem>
+                <tocitem target="api/getButton.html">getButton</tocitem>
                 <tocitem target="funct.html">setButtonAsync</tocitem>
                 <tocitem target="function_3.html">buttonWasPressed</tocitem>
                 <tocitem target="function_3.html">buttonWasReleased</tocitem>
@@ -95,23 +97,23 @@
              
             <tocitem target="engduino_sensors.html">Engduino Sensors
                 <!-- Inside category, list its functions alphabetically -->
-                <tocitem target="api/api_getAccelerometer.html">getAccelerometer</tocitem>
-                <tocitem target="api/api_getTemperature.html">getTemperature</tocitem>
-                <tocitem target="api/api_getLight.html">getLight</tocitem>
-                <tocitem target="api/api_getMagnetometer.html">getMagnetometer</tocitem>
+                <tocitem target="api/getAccelerometer.html">getAccelerometer</tocitem>
+                <tocitem target="api/getTemperature.html">getTemperature</tocitem>
+                <tocitem target="api/getLight.html">getLight</tocitem>
+                <tocitem target="api/getMagnetometer.html">getMagnetometer</tocitem>
                 <tocitem target="function_2.html">getSensors</tocitem>
                 <!-- ... -->
             </tocitem>
 
             <tocitem target="read_and_write_data.html">Read and Write Data
                 <!-- Inside category, list its functions alphabetically -->
-                <tocitem target="api/api_analogRead.html">analogRead</tocitem>
-                <tocitem target="api/api_analogWrite.html">analogWrite</tocitem>
-                <tocitem target="api/api_digitalRead.html">digitalRead</tocitem>
-                <tocitem target="api/api_digitalWrite.html">digitalWrite</tocitem>
+                <tocitem target="api/analogRead.html">analogRead</tocitem>
+                <tocitem target="api/analogWrite.html">analogWrite</tocitem>
+                <tocitem target="api/digitalRead.html">digitalRead</tocitem>
+                <tocitem target="api/digitalWrite.html">digitalWrite</tocitem>
                 <tocitem target="function_2.html">getAnalogPinsValue</tocitem>                
-                <tocitem target="api/api_pinMode.html">pinMode</tocitem>
-                <tocitem target="api/api_pinModeA.html">pinModeA</tocitem>
+                <tocitem target="api/pinMode.html">pinMode</tocitem>
+                <tocitem target="api/pinModeA.html">pinModeA</tocitem>
                 <!-- ... -->
             </tocitem>            
            

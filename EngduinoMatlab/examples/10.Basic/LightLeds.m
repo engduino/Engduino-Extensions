@@ -7,7 +7,6 @@
 % is more smooth signal without spikes.
 %
 % July 2014, Engduino team: support@engduino.org
-% 
 
 %% Initialize variables
 

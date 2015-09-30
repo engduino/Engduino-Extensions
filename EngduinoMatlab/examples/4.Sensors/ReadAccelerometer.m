@@ -5,7 +5,7 @@
 % one input value, which it represent the state of the small green colour LED on the
 % Engduino board.
 %
-% July 2014, Engduino team: support@engduino.org
+% July 2015, MathWorks & Engduino team: support@engduino.org
 
 %% Initialize variables
 
