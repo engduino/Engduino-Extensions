@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<toc version="2.0">
+<!-- First tocitem specifies top level in Help browser Contents pane -->
+<!-- This can be a roadmap page, as shown below, or a content page -->
+    <tocitem target="index.html">MATLAB Support Package for Engduino Hardware
+        <!-- Nest tocitems to create hierarchical entries in  Contents-->
+        <!-- To include icons, use the following syntax for tocitems: -->
+        <!-- <tocitem target="foo.html" image="HelpIcon.NAME"> -->
+        <!-- Title-of-Section </tocitem> -->
+        <!-- where NAME is one of the following (use capital letters): -->
+        <!-- FUNCTION, USER_GUIDE, EXAMPLES, BLOCK, GETTING_STARTED, -->
+        <!-- DEMOS, RELEASE_NOTES --> 
+        <!-- Icon images used for these entries are also stored in -->
+        <!-- matlabroot/toolbox/matlab/icons -->
+        <!-- A Getting Started Guide usually comes first -->
+        <tocitem target="getting_started.html" image="HelpIcon.GETTING_STARTED">
+            Getting Started with MATLAB Support Package for Engduino Hardware
+            <tocitem target="product_description.html">Product Description
+            </tocitem>
+            <tocitem target="supported_hardware.html">Supported Hardware
+            </tocitem>
+            <tocitem target="setup_and_configuration.html">Setup and Configuration Guide
+            </tocitem>
+            <tocitem target="tutorials.html">Tutorials
+                <tocitem target="connect_to_engduino.html">Connect to Engduino Hardware
+                </tocitem>
+                <tocitem target="find_port_numbers.html">Find Port Numbers
+                </tocitem>
+            </tocitem>
+        </tocitem>
+        <!-- User Guide comes next -->
+        <tocitem target="matlab_support_package_engduino_example.html" 
+            image="HelpIcon.USER_GUIDE">MATLAB Support Package for Engduino Hardware Example
+            <tocitem target="set_led_examples.html">Setting LEDs
+                <tocitem target="Example/SetLedOnOff.html">Set LED on/off</tocitem>
+                <tocitem target="Example/SetLeds.html">Set LEDs Colours</tocitem>
+                <tocitem target="Example/Blink.html">Set LEDs Blink
+                </tocitem>
+                <tocitem target="Example/RunningLeds.html">Set Colours Changing Running LEDs 
+                </tocitem>
+            </tocitem>
+
+            <tocitem target="basic_io_examples.html">Basic Input/Output
+                <tocitem target="Example/Button.html">Setting Button
+                </tocitem>
+            </tocitem>
+            
+            <tocitem target="set_sensors_examples.html">Setting Sensors
+                <tocitem target="Example/GetAccelerometer.html">Get Accelerometer Data
+                </tocitem>
+                <tocitem target="Example/GetTemperature.html">Get Temperature Data
+                </tocitem>
+            </tocitem>
+            
+            <tocitem target="advanced_examples.html">Advanced Examples
+                <tocitem target="Example/MagnetometerCalibration.html">Magnetometer Calibration
+                </tocitem>
+                <tocitem target="Example/PulseSensor.html">Working with External Pulse Sensor
+                </tocitem>
+                <tocitem target="Example/estimateDistanceIntegration.html">Integrate Acceleration to Displacement
+                </tocitem>
+                <tocitem target="Example/accKeyboardControl.html">Use Accelerometer to control Keyboard with External Library
+                </tocitem>
+                <tocitem target="Example/TemperatureSensorUploadThingSpeak.html">Collect temperature data and upload to ThingSpeak
+                </tocitem>
+            </tocitem>
+            
+        </tocitem>
+        <!-- Function reference next -->
+        <!-- First item is page describing function categories, if any -->
+        <tocitem target="functions_reference.html" 
+                 image="HelpIcon.FUNCTION">Function Reference
+            <tocitem target="api/engduino.html">engduino</tocitem>
+            <!-- First category, with link to anchor in above page -->
+            <tocitem target="engduino_leds.html">Engduino LEDs
+                <!-- Inside category, list its functions alphabetically -->
+                <tocitem target="api/setLed.html">setLed</tocitem>
+                <tocitem target="api/setLeds.html">setLeds</tocitem>
+                <tocitem target="api/setLedsAll.html">setLedsAll</tocitem>
+                <tocitem target="api/setLedsExact.html">setLedsExact</tocitem>
+                <tocitem target="api/setLedsOne.html">setLedsOne</tocitem>
+                <tocitem target="api/setLedsB.html">setLedsB</tocitem>
+                <tocitem target="api/setLedsAllB.html">setLedsAllB</tocitem>
+
+                <!-- ... -->
+            </tocitem>
+            <!-- Second category, with link to anchor in above page -->
+            <tocitem target="engduino_button.html">Engduino Button
+                <!-- Inside category, list its functions alphabetically -->
+                <tocitem target="api/getButton.html">getButton</tocitem>
+                <tocitem target="funct.html">setButtonAsync</tocitem>
+                <tocitem target="function_3.html">buttonWasPressed</tocitem>
+                <tocitem target="function_3.html">buttonWasReleased</tocitem>
+                <!-- ... -->
+            </tocitem>
+             
+            <tocitem target="engduino_sensors.html">Engduino Sensors
+                <!-- Inside category, list its functions alphabetically -->
+                <tocitem target="api/getAccelerometer.html">getAccelerometer</tocitem>
+                <tocitem target="api/getTemperature.html">getTemperature</tocitem>
+                <tocitem target="api/getLight.html">getLight</tocitem>
+                <tocitem target="api/getMagnetometer.html">getMagnetometer</tocitem>
+                <tocitem target="function_2.html">getSensors</tocitem>
+                <!-- ... -->
+            </tocitem>
+
+            <tocitem target="read_and_write_data.html">Read and Write Data
+                <!-- Inside category, list its functions alphabetically -->
+                <tocitem target="api/analogRead.html">analogRead</tocitem>
+                <tocitem target="api/analogWrite.html">analogWrite</tocitem>
+                <tocitem target="api/digitalRead.html">digitalRead</tocitem>
+                <tocitem target="api/digitalWrite.html">digitalWrite</tocitem>
+                <tocitem target="function_2.html">getAnalogPinsValue</tocitem>                
+                <tocitem target="api/pinMode.html">pinMode</tocitem>
+                <tocitem target="api/pinModeA.html">pinModeA</tocitem>
+                <!-- ... -->
+            </tocitem>            
+           
+        </tocitem>
+        <!-- Optional List of Examples, with hyperlinks to examples in other files -->
+        <tocitem target="mytbx_example.html" 
+                 image="HelpIcon.HelpIcon.EXAMPLES">Troubleshooting in MATLAB Support Package for Engduino Hardware
+                <tocitem target="cannot_connect_hardware.html">Cannot Connect to Engduino Hardware</tocitem>
+        </tocitem>
+        <!-- Optional link or links to your or other Web sites -->
+        <tocitem target="http://www.engduino.org/contact_us/" 
+                 image="$toolbox/matlab/icons/webicon.gif">
+        Getting Help Support
+        </tocitem>
+    </tocitem>
+</toc>

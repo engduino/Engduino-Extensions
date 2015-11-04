@@ -1,0 +1,198 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>setLedsB</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-09-24"><meta name="DC.source" content="api_setLedsB.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>setLedsB</h1><!--introduction--><p>Set individual colours and brightness for all 16 LEDs on Engduino</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">Examples</a></li><li><a href="#4">Input Arguments</a></li><li><a href="#5">Output Arguments</a></li><li><a href="#6">Properties</a></li></ul></div><h2>Syntax<a name="1"></a></h2><pre class="codeinput">e.getStatus(parameters);
+</pre><h2>Description<a name="2"></a></h2><p>
+<head>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<table style="width: 100%" >
+  <tr>
+     <td id="api"><a href="#one">e.setLedsB([1x16_Colour],[1x16_Brightness])</a></td>
+     <td>first parameter is a 1x16 matrix that set the colour of the LEDs. The second parameter is a
+      1x16 matrix that set the brightness of the LEDs.</td>
+  </tr>
+</table>
+</p><h2>Examples<a name="3"></a></h2><p>
+<a name="one" id="title"><li><b>Set the individual colour and brightness of the 16 LEDs</b></li></a>
+</p><p>Connect to Engduino on port 3 and set the colours and brightness for each LEDs, the column of the matrix correspond to the position LEDs on Engduino</p><pre class="codeinput"><span class="comment">% Colours are defined in engduino object as:</span>
+<span class="comment">%     COLOR_RED =     0</span>
+<span class="comment">%     COLOR_GREEN =   1</span>
+<span class="comment">%     COLOR_BLUE =    2</span>
+<span class="comment">%     COLOR_YELLOW =  3</span>
+<span class="comment">%     COLOR_MAGENTA = 4</span>
+<span class="comment">%     COLOR_CYA =     5</span>
+<span class="comment">%     COLOR_WHITE =   6</span>
+<span class="comment">%     COLOR_OFF =     7</span>
+<span class="comment">% Brightness level from 0-15</span>
+
+<span class="comment">% Check if the Engduino object already exists. Otherwise initialize it.</span>
+<span class="keyword">if</span> (~exist(<span class="string">'e'</span>, <span class="string">'var'</span>))
+        e = engduino();
+<span class="keyword">end</span>
+e.setLedsB([0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7],[1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+</pre><h2>Input Arguments<a name="4"></a></h2><p>
+<table style="width: 100%" >
+  <tr>
+     <td id="api">[1x16_Colour]</td>
+     <td>A one 1x16 matrix with values representing the colours in the range of [0-7]. The
+      order correspond to the position of the LED</td>
+  </tr>
+  <tr>
+     <td id="api">[1x16_Brightness]</td>
+     <td>A one 1x16 matrix with values representing the LEDs brightness. The
+      order correspond to the position of the LED </td>
+  </tr>
+</table>
+</p><h2>Output Arguments<a name="5"></a></h2><p>
+<table style="width: 100%" >
+  <tr>
+     <td id="api">res</td>
+     <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td>
+  </tr>
+</table>
+</p><h2>Properties<a name="6"></a></h2><div><ul><li><a href="../engduino_leds.html#colour_properties">LED Colours</a></li></ul></div><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% setLedsB
+% Set individual colours and brightness for all 16 LEDs on Engduino
+%
+%% Syntax
+e.getStatus(parameters);
+%% Description
+% <html>
+% <head>
+% <link rel="stylesheet" href="../css/style.css">
+% </head>
+% <table style="width: 100%" >
+%   <tr>
+%      <td id="api"><a href="#one">e.setLedsB([1x16_Colour],[1x16_Brightness])</a></td>
+%      <td>first parameter is a 1x16 matrix that set the colour of the LEDs. The second parameter is a
+%       1x16 matrix that set the brightness of the LEDs.</td> 
+%   </tr>
+% </table>
+% </html>
+% 
+%% Examples
+%
+% <html>
+% <a name="one" id="title"><li><b>Set the individual colour and brightness of the 16 LEDs</b></li></a>
+% </html>
+%
+% Connect to Engduino on port 3 and set the colours and brightness for each
+% LEDs, the column of the matrix correspond to the position LEDs on Engduino
+
+% Colours are defined in engduino object as:
+%     COLOR_RED =     0
+%     COLOR_GREEN =   1
+%     COLOR_BLUE =    2
+%     COLOR_YELLOW =  3
+%     COLOR_MAGENTA = 4
+%     COLOR_CYA =     5
+%     COLOR_WHITE =   6
+%     COLOR_OFF =     7
+% Brightness level from 0-15
+
+% Check if the Engduino object already exists. Otherwise initialize it.
+if (~exist('e', 'var'))
+        e = engduino();
+end
+e.setLedsB([0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7],[1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+
+%% Input Arguments
+%
+% <html>
+% <table style="width: 100%" >
+%   <tr>
+%      <td id="api">[1x16_Colour]</td>
+%      <td>A one 1x16 matrix with values representing the colours in the range of [0-7]. The 
+%       order correspond to the position of the LED</td> 
+%   </tr>
+%   <tr>
+%      <td id="api">[1x16_Brightness]</td>
+%      <td>A one 1x16 matrix with values representing the LEDs brightness. The 
+%       order correspond to the position of the LED </td> 
+%   </tr>
+% </table>
+% </html>
+% 
+%% Output Arguments
+% 
+% <html>
+% <table style="width: 100%" >
+%   <tr>
+%      <td id="api">res</td>
+%      <td>Return status to indicate whether function has been executed (int) 0: OK, <0: Error code</td> 
+%   </tr>
+% </table>
+% </html>
+%% Properties
+% * <../engduino_leds.html#colour_properties LED Colours>
+%
+
+##### SOURCE END #####
+--></body></html>

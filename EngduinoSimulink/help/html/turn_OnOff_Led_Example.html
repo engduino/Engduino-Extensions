@@ -1,0 +1,190 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Using Button to turn on/off LED</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-09-28"><meta name="DC.source" content="turn_OnOff_Led_Example.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Using Button to turn on/off LED</h1><!--introduction--><p>This example shows to create a model that turn on the LED when the button is pressed.</p><p><b>Supported Hardware</b></p><div><ul><li>Engduino v1</li><li>Engduino v2</li><li>Engduino v3</li></ul></div><p><b>Version for this example</b></p><p>The provided model is pre-configured with the Engduino v3 which uses the Arduino Lilypad hardware. Other version of Engduino is also supported.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Prerequisites</a></li><li><a href="#3">Model</a></li><li><a href="#4">Task 1 - Configure the model for Engduino Hardware</a></li><li><a href="#5">Task 2 - Create a model for Engduino Hardware</a></li><li><a href="#6">Task 3 - Run the Model on Engduino Hardware</a></li><li><a href="#7">Other Things to Try</a></li><li><a href="#8">Summary</a></li></ul></div><h2>Introduction<a name="1"></a></h2><p>Simulink Support Package for Engduino Hardware enables you to create and run Simulink models on the Engduino board. The toolbox contains the modelling blocks for configuring and accessing, Engduino sensors, actuators and communication interfaces. In this example, you will learn how to create a Simulink model that uses the button to controls the led.</p><h2>Prerequisites<a name="2"></a></h2><p>We recommend completing the <a href="getting_started_with_engduino.html">Getting started with Engduino Hardware tutorial</a></p><h2>Model<a name="3"></a></h2><p>The following figure shows the example model</p><p><img vspace="5" hspace="5" src="img/Tutorial/turnOnOffLed.PNG" alt=""> </p><h2>Task 1 - Configure the model for Engduino Hardware<a name="4"></a></h2><p>All the Engduino block is located in a file named <b>engduino_driver.slx</b> which is located in the Simulink Support Package for Engduino folder.</p><div><ol><li>Create a new Simulink script and save the model. Include the librarues and src folder in the toolbox to the folder that contains your script either by creating a link or simply copy and paste the two folders.</li><li>In your Simulink model, click <b>Tools</b> &gt; <b>Run on Target Hardware</b> &gt; <b>Prepare to Run...</b>.</li><li>When the <b>Configuration Parameters</b> page opens up. set the <b>Target Hardware</b> parameter to <b>Arduino Lilypad</b>. Do not change any other settings.</li><li>Click <b>Apply</b>.</li></ol></div><h2>Task 2 - Create a model for Engduino Hardware<a name="5"></a></h2><p>In this task, you will create a simple Simulink model that lights up the Engduino's led when the button is pressed.</p><div><ol><li>Open the <b>engduino_driver.slx</b> file, which is located under example in the Simulink Support Package for Engduino toolbox folder.</li><li>Copy the <b>button</b> block from the engduino_driver.slx file to your model.</li><li>Open the <b>Simulink Library Browser</b>, navigate to <b>Simulink</b> &gt; <b>Ports &amp; Subsystem</b></li><li>Drag the <b>If</b> block into the model. Connect the <b>button</b> block to the input of the <b>if</b> block.</li><li>In the Simulink Library Browser, search for <b>if action subsystem</b> block. Drag the block into the model.</li><li>Double-click the <b>if action subsystem</b> block, look under the subsystem model, copy and paste the In1 to Out1 connection twice to create two more input and output.</li><li>Locate the <b>Constant</b> block, which is <b>under *Simulink</b> &gt; <b>Commonly Used Block</b></li><li>Drag and the <b>constant</b> block into the model.</li><li>Double-click the <b>constant</b> block and set the Constant value to an integer in the range of 0-15. Choose any number other than 0.</li><li>Click on the <b>Signal Attributes</b> tab, select <b>Output data type</b> as <b>uint8</b>.</li><li>Click <b>Ok</b>.</li><li>Copy and paste the constant block to create two more of them.</li><li>Connect these three constant blocks to the inputs of the <b>if action subsystem</b>.</li><li>Copy all three <b>constant</b> blocks and the <b>if action subsytem</b> block and paste it into your model. Change the value of all three new <b>contant</b> block to 0.</li><li>Connect the first <b>if action subsystem</b> to the <b>if</b> block if part and the second <b>if action subsystem</b> to the <b>else</b> part of the <b>if</b> block.</li><li>In the <b>Simulink Library Browser</b>, navigate to <b>Simulink</b> &gt; <b>Signal Routing</b>, drag the <b>Merge</b> block into the model.</li><li>Create another two more <b>Merge</b> block.</li><li>Open the <b>engduino_driver.slx</b> file, copy the <b>rgb_led</b> block into your model.</li><li>Connect the Out1 of the two <b>if action subsystem</b> block to the <b>Merge</b> block's input, connect the output of the <b>Merge</b> block to r input of the rgb_led block. The merge block will merge both signals coming from the if-else block into the rgb_led. Only one of the subsystem will be activated at one time.</li><li>Perform the same step for inputs g and b of the <b>rgb_led</b> block. Reference the model above for the connection.</li><li>Save your model.</li></ol></div><h2>Task 3 - Run the Model on Engduino Hardware<a name="6"></a></h2><p>In this task, you will run your model on the Engduino hardware</p><div><ol><li>Connect the Engduino board to your computer with a USB Cable and turn on the Engduino.</li><li>In your Simulink model, click the <b>Deploy to Hardware</b> button on the toolbar. The model will now be deployed to the connected Engduino hardware.</li><li>Look at LED 0, the LED should light up with a colour configured by the r,g,b value you have just set when the push button is pressed.</li></ol></div><h2>Other Things to Try<a name="7"></a></h2><div><ul><li>Change the colour of the led by changing the constant value.</li><li>Instead of push button, use a sensor to activate the led.</li></ul></div><h2>Summary<a name="8"></a></h2><p>This example showed you how to use Simulink Support Package for Engduino Hardware to control the led. In this example, you learned how to</p><div><ul><li>Use the push button to control led</li><li>Create an if-else statement in Simulink</li></ul></div><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Using Button to turn on/off LED
+% This example shows to create a model that turn on the LED when the button
+% is pressed.
+%
+% *Supported Hardware*
+%
+% * Engduino v1
+% * Engduino v2
+% * Engduino v3
+%
+% *Version for this example*
+%
+% The provided model is pre-configured with the Engduino v3 which uses the 
+% Arduino Lilypad hardware. Other version of Engduino is also supported.
+%
+%% Introduction
+% Simulink Support Package for Engduino Hardware enables you to create and 
+% run Simulink models on the Engduino board. The toolbox contains the
+% modelling blocks for configuring and accessing, Engduino sensors,
+% actuators and communication interfaces. In this example, you will learn
+% how to create a Simulink model that uses the button to controls the led.
+%
+%% Prerequisites
+% We recommend completing the  
+% <getting_started_with_engduino.html Getting started with Engduino Hardware tutorial>
+% 
+%% Model
+% The following figure shows the example model
+%
+% <<img/Tutorial/turnOnOffLed.PNG>>
+%
+%% Task 1 - Configure the model for Engduino Hardware
+%
+% All the Engduino block is located in a file named *engduino_driver.slx*
+% which is located in the Simulink Support Package for Engduino folder.
+%
+% # Create a new Simulink script and save the model. Include the librarues and src
+% folder in the toolbox to the folder that contains your script either by
+% creating a link or simply copy and paste the two folders.
+% # In your Simulink model, click *Tools* > *Run on Target Hardware* >
+% *Prepare to Run...*.
+% # When the *Configuration Parameters* page opens up. set the *Target
+% Hardware* parameter to *Arduino Lilypad*. Do not change any other
+% settings.
+% # Click *Apply*.
+%
+%% Task 2 - Create a model for Engduino Hardware
+%
+% In this task, you will create a simple Simulink model that lights up the 
+% Engduino's led when the button is pressed.
+%
+% # Open the *engduino_driver.slx* file, which is located under example 
+% in the Simulink Support Package for Engduino toolbox folder.
+% # Copy the *button* block from the engduino_driver.slx file to your
+% model.
+% # Open the *Simulink Library Browser*, navigate to *Simulink* > *Ports & Subsystem*
+% # Drag the *If* block into the model. Connect the *button* block to the
+% input of the *if* block.
+% # In the Simulink Library Browser, search for *if action subsystem*
+% block. Drag the block into the model.
+% # Double-click the *if action subsystem* block, look under the subsystem
+% model, copy and paste the In1 to Out1 connection twice to create two more
+% input and output.
+% # Locate the *Constant* block, which is *under *Simulink* > *Commonly Used Block*
+% # Drag and the *constant* block into the model.
+% # Double-click the *constant* block and set the Constant value to an
+% integer in the range of 0-15. Choose any number other than 0.  
+% # Click on the *Signal Attributes* tab, select *Output data type* as
+% *uint8*.
+% # Click *Ok*.
+% # Copy and paste the constant block to create two more of them.
+% # Connect these three constant blocks to the inputs of the *if action
+% subsystem*. 
+% # Copy all three *constant* blocks and the *if action subsytem* block and
+% paste it into your model. Change the value of all three new *contant* block to 0.  
+% # Connect the first *if action subsystem* to the *if* block if part and
+% the second *if action subsystem* to the *else* part of the *if* block.
+% # In the *Simulink Library Browser*, navigate to *Simulink* > *Signal
+% Routing*, drag the *Merge* block into the model.
+% # Create another two more *Merge* block.
+% # Open the *engduino_driver.slx* file, copy the *rgb_led* block into your
+% model.
+% # Connect the Out1 of the two *if action subsystem* block to the *Merge*
+% block's input, connect the output of the *Merge* block to r input of the
+% rgb_led block. The merge block will merge both signals coming from the
+% if-else block into the rgb_led. Only one of the subsystem will be
+% activated at one time.
+% # Perform the same step for inputs g and b of the *rgb_led* block.
+% Reference the model above for the connection.
+% # Save your model.
+%
+%% Task 3 - Run the Model on Engduino Hardware
+% 
+% In this task, you will run your model on the Engduino
+% hardware
+%
+% # Connect the Engduino board to your computer with a USB Cable and turn
+% on the Engduino.
+% # In your Simulink model, click the *Deploy to Hardware* button on the
+% toolbar. The model will now be deployed to the connected Engduino
+% hardware.
+% # Look at LED 0, the LED should light up with a colour configured by the 
+% r,g,b value you have just set when the push button is pressed. 
+%
+%% Other Things to Try
+%
+% * Change the colour of the led by changing the constant value. 
+% * Instead of push button, use a sensor to activate the led.
+%
+%% Summary
+%
+% This example showed you how to use Simulink Support Package for Engduino
+% Hardware to control the led. In this example, you learned how to
+%
+% * Use the push button to control led
+% * Create an if-else statement in Simulink
+% 
+
+##### SOURCE END #####
+--></body></html>

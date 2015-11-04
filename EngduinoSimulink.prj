@@ -1,0 +1,114 @@
+<deployment-project plugin="plugin.toolbox" plugin-version="1.0">
+  <configuration build-checksum="1196842842" file="C:\Users\kkhoo\Documents\new_engduino_development\Development\EngduinoSimulink.prj" location="C:\Users\kkhoo\Documents\new_engduino_development\Development" name="EngduinoSimulink" target="target.toolbox" target-name="Package Toolbox">
+    <param.appname>EngduinoSimulink</param.appname>
+    <param.authnamewatermark />
+    <param.email />
+    <param.company />
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.version>1.0</param.version>
+    <param.output>${PROJECT_ROOT}\EngduinoSimulink.mltbx</param.output>
+    <param.products.name>
+      <item>MATLAB</item>
+      <item>Simulink</item>
+      <item>SystemTest</item>
+    </param.products.name>
+    <param.products.id>
+      <item>1</item>
+      <item>2</item>
+      <item>77</item>
+    </param.products.id>
+    <param.products.version>
+      <item>8.5</item>
+      <item>8.5</item>
+      <item>2.6.9</item>
+    </param.products.version>
+    <param.platforms />
+    <param.guid>e7cbd780-e45f-4124-91fb-7648e50f10db</param.guid>
+    <param.exclude.filters />
+    <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;examples/&gt;</param.examples>
+    <param.demosxml />
+    <param.apps />
+    <param.docs>${PROJECT_ROOT}\EngduinoSimulink\help\info.xml</param.docs>
+    <unset>
+      <param.authnamewatermark />
+      <param.email />
+      <param.company />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.version />
+      <param.output />
+      <param.platforms />
+      <param.exclude.filters />
+      <param.demosxml />
+      <param.apps />
+    </unset>
+    <fileset.rootdir>
+      <file>${PROJECT_ROOT}\EngduinoSimulink</file>
+    </fileset.rootdir>
+    <fileset.rootfiles>
+      <file>${PROJECT_ROOT}\EngduinoSimulink\documentation</file>
+      <file>${PROJECT_ROOT}\EngduinoSimulink\example</file>
+      <file>${PROJECT_ROOT}\EngduinoSimulink\help</file>
+      <file>${PROJECT_ROOT}\EngduinoSimulink\Tutorial.docx</file>
+      <file>${PROJECT_ROOT}\EngduinoSimulink\Tutorial_2015a.docx</file>
+    </fileset.rootfiles>
+    <fileset.depfun.included>
+      <file>C:\MATLAB\SupportPackages\R2015a\arduinobase\toolbox\realtime\targets\arduino\+realtime\+internal\getArduinoCustomDownloadBaudRate.p</file>
+      <file>C:\MATLAB\SupportPackages\R2015a\arduinobase\toolbox\realtime\targets\arduino\+realtime\+internal\getArduinoIDERoot.p</file>
+    </fileset.depfun.included>
+    <fileset.depfun.excluded />
+    <fileset.package />
+    <build-deliverables>
+      <file location="C:\Users\kkhoo\Documents\new_engduino_development\Development" name="EngduinoSimulink.mltbx" optional="false">C:\Users\kkhoo\Documents\new_engduino_development\Development\EngduinoSimulink.mltbx</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2015a</root>
+      <toolboxes>
+        <toolbox name="matlabhdlcoder" />
+        <toolbox name="fixedpoint" />
+        <toolbox name="embeddedcoder" />
+        <toolbox name="matlabcoder" />
+      </toolboxes>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.1</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

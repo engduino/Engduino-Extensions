@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding="utf-8"?>
+
+<toc version="2.0">
+<!-- First tocitem specifies top level in Help browser Contents pane -->
+<!-- This can be a roadmap page, as shown below, or a content page -->
+    <tocitem target="index.html">Simulink Support Package for Engduino Hardware
+        <!-- Nest tocitems to create hierarchical entries in  Contents-->
+        <!-- To include icons, use the following syntax for tocitems: -->
+        <!-- <tocitem target="foo.html" image="HelpIcon.NAME"> -->
+        <!-- Title-of-Section </tocitem> -->
+        <!-- where NAME is one of the following (use capital letters): -->
+        <!-- FUNCTION, USER_GUIDE, EXAMPLES, BLOCK, GETTING_STARTED, -->
+        <!-- DEMOS, RELEASE_NOTES --> 
+        <!-- Icon images used for these entries are also stored in -->
+        <!-- matlabroot/toolbox/matlab/icons -->
+        <!-- A Getting Started Guide usually comes first -->
+        <tocitem target="getting_started.html" image="HelpIcon.GETTING_STARTED">
+            Getting Started with Simulink Support Package for Engduino Hardware
+            <tocitem target="product_description.html">Product Description
+            </tocitem>
+            <tocitem target="supported_hardware.html">Supported Hardware
+            </tocitem>
+            <tocitem target="setup_and_configuration.html">Setup and Configuration Guide
+            </tocitem>
+            <tocitem target="tutorials.html">Tutorials
+                <tocitem target="getting_started_with_engduino.html">Getting Started with Engduino Hardware
+                </tocitem>
+            </tocitem>
+        </tocitem>
+        <!-- User Guide comes next -->
+        <tocitem target="simulink_support_package_engduino_example.html" 
+            image="HelpIcon.USER_GUIDE">Simulink Support Package for Engduino Hardware Example
+                <tocitem target="turn_OnOff_Led_Example.html">Using Button to turn on/off LED</tocitem>
+                <tocitem target="getTemperatureSerial.html">Getting temperature data through Serial in MATLAB</tocitem>
+                <tocitem target="uploadDataToThingSpeak.html">Get temperature from Temperature Serial block and upload data to ThingSpeak</tocitem>
+
+        </tocitem>
+        <!-- Function reference next -->
+        <!-- First item is page describing function categories, if any -->
+        <tocitem target="modelling_block.html" 
+                 image="HelpIcon.FUNCTION">Modelling Blocks
+            <tocitem target="block_model/thermistor.html">Thermistor</tocitem>
+            <tocitem target="block_model/magnetometer.html">Magnetometer</tocitem>
+            <tocitem target="block_model/photodiode.html">Photodiode</tocitem>
+            <tocitem target="block_model/ir_receive.html">IR_Receive</tocitem>
+            <tocitem target="block_model/doc_accelerometer.html">Accelerometer</tocitem>
+            <tocitem target="block_model/doc_button.html">Button</tocitem>
+            <tocitem target="block_model/rgb_led.html">Rgb_led</tocitem>
+            <tocitem target="block_model/rgb_led_selector.html">Rgb_led_selector</tocitem>
+            <tocitem target="block_model/ir_send.html">IR_send</tocitem>
+            <tocitem target="block_model/thermistor_serial.html">Thermistor_serial</tocitem>
+            <tocitem target="block_model/photodiode_serial.html">Photodiode_serial</tocitem>
+            <tocitem target="block_model/read_serial.html">Read_serial</tocitem>
+            <tocitem target="block_model/serial_print.html">Serial_print</tocitem>
+        </tocitem>
+        <!-- Optional List of Examples, with hyperlinks to examples in other files -->
+        <tocitem target="mytbx_example.html" 
+                 image="HelpIcon.HelpIcon.EXAMPLES">Troubleshooting in Simulink Support Package for Engduino Hardware
+                <tocitem target="cannot_connect_hardware.html">Cannot Connect to Engduino Hardware</tocitem>
+        </tocitem>
+        <!-- Optional link or links to your or other Web sites -->
+        <tocitem target="http://www.engduino.org/contact_us/" 
+                 image="$toolbox/matlab/icons/webicon.gif">
+        Getting Help Support
+        </tocitem>
+    </tocitem>
+</toc>
