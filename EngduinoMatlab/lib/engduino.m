@@ -82,6 +82,7 @@ classdef engduino < handle
         COLOR_YELLOW =  3
         COLOR_MAGENTA = 4
         COLOR_CYA =     5
+        COLOR_CYAN =     5
         COLOR_WHITE =   6
         COLOR_OFF =     7 
         
